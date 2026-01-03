@@ -1,386 +1,782 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liquid Glass 9.0 | Admin Edition</title>
+    <title>LIBDock</title>
+    <link rel="icon" type="image/jpg" href="LogoTitle.jpg">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-
         :root {
-            --accent: #00f2fe;
-            --danger: #ff0055;
-            --success: #00ffa3;
-            --admin: #ff00ff;
-            --bg: #050508;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg-color: #000000;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --accent: #007AFF;
+            --accent-green: #30D158;
+            --accent-orange: #FF9F0A;
+            --text-main: #ffffff;
+            --text-sec: #8E8E93;
+            --modal-bg: #1c1c1e;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: white; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-
-        /* Эффект свечения на фоне */
-        .bg-glow {
-            position: fixed; width: 400px; height: 400px; background: var(--accent);
-            filter: blur(150px); opacity: 0.1; z-index: -1; border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-        @keyframes move { from { transform: translate(-50%, -50%); } to { transform: translate(50%, 50%); } }
-
-        #app {
-            width: 420px; height: 85vh; max-height: 800px;
-            background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(50px);
-            border: 1px solid var(--border); border-radius: 50px;
-            display: flex; flex-direction: column; position: relative;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8); overflow: hidden;
+        body.light-mode {
+            --bg-color: #f2f2f7;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --text-main: #000000;
+            --text-sec: #636366;
+            --modal-bg: #ffffff;
         }
 
-        /* Screen: Banned / Admin Bypass */
-        #screen-ban {
-            position: absolute; inset: 0; background: #000; z-index: 9999;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Top Bar */
-        .top-bar { padding: 35px 30px 15px; display: flex; justify-content: space-between; align-items: center; }
-        .rank-tag { 
-            background: var(--glass); border: 1px solid var(--border); padding: 5px 15px; 
-            border-radius: 15px; font-size: 11px; font-weight: 800; color: var(--accent);
-            text-transform: uppercase; letter-spacing: 1px;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
-        .rank-tag.admin-mode { color: var(--admin); border-color: var(--admin); box-shadow: 0 0 15px var(--admin); }
 
-        /* Card Section */
-        .card-box { padding: 10px 30px 25px; perspective: 1000px; }
-        .main-card {
-            height: 200px; background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 35px;
-            padding: 30px; display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; overflow: hidden; transition: 0.5s;
+        /* --- UI CONTROLS --- */
+        .controls-top {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
         }
-        .main-card.admin-ui { background: linear-gradient(145deg, rgba(255,0,255,0.1), rgba(0,0,0,0.5)); border-color: var(--admin); }
-        .balance-label { font-size: 11px; opacity: 0.4; letter-spacing: 2px; }
-        .balance-value { font-size: 2.5rem; font-weight: 800; margin-top: 5px; }
 
-        /* Views */
-        .view-container { flex: 1; overflow-y: auto; padding: 0 30px 120px; scrollbar-width: none; }
-        .view-container::-webkit-scrollbar { display: none; }
-        .view { display: none; animation: fadeIn 0.4s ease; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Grid */
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .item-tile {
-            background: var(--glass); border: 1px solid var(--border); padding: 25px 15px;
-            border-radius: 30px; text-align: center; cursor: pointer; transition: 0.3s;
+        .ui-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--text-main);
+            font-weight: 700;
         }
-        .item-tile:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); border-color: var(--accent); }
-        .item-tile i { font-size: 1.5rem; display: block; margin-bottom: 8px; }
 
-        /* List Rows */
-        .list-item {
-            background: rgba(255,255,255,0.02); padding: 18px 22px; border-radius: 25px;
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
-            border: 1px solid transparent; transition: 0.3s;
+        /* --- NEW MOBILE STUB STYLE --- */
+        #mobile-stub {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 99999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            overflow: hidden;
         }
-        .list-item:hover { background: rgba(255,255,255,0.04); border-color: var(--border); }
-        .action-btn { 
-            background: var(--accent); color: #000; border: none; padding: 10px 18px; 
-            border-radius: 15px; font-weight: 800; font-size: 11px; cursor: pointer;
-        }
-        .action-btn.admin-btn { background: var(--admin); color: white; }
 
-        /* Navigation */
-        .bottom-nav {
-            position: absolute; bottom: 25px; left: 30px; right: 30px;
-            height: 75px; background: rgba(15, 15, 20, 0.9); backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 30px;
-            display: flex; justify-content: space-around; align-items: center;
+        .stub-content {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: 40px 25px;
+            border-radius: 35px;
+            max-width: 320px;
+            z-index: 2;
         }
-        .nav-tab { opacity: 0.3; transition: 0.3s; cursor: pointer; padding: 15px; font-size: 1.3rem; }
-        .nav-tab.active { opacity: 1; color: var(--accent); transform: translateY(-5px); }
 
-        /* Modals */
-        .modal-wrap { position: absolute; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: flex-end; z-index: 1000; }
-        .modal-body { 
-            width: 100%; background: #0a0a0f; border-top: 2px solid var(--accent); 
-            border-radius: 40px 40px 0 0; padding: 40px 30px; transform: translateY(100%); transition: 0.4s;
+        #mobile-stub h1 { 
+            font-size: 22px; 
+            margin-bottom: 15px; 
+            color: var(--text-main); 
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
-        .modal-wrap.active { display: flex; }
-        .modal-wrap.active .modal-body { transform: translateY(0); }
+        
+        #mobile-stub p { 
+            font-size: 14px; 
+            color: var(--text-sec); 
+            line-height: 1.6;
+        }
 
-        /* Utility */
-        .text-success { color: var(--success); }
-        .text-danger { color: var(--danger); }
-        input { width: 100%; padding: 20px; background: #111; border: 1px solid var(--border); border-radius: 20px; color: white; margin-bottom: 20px; outline: none; }
+        .stub-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 15px var(--accent));
+        }
+
+        @media (max-width: 768px) {
+            body { overflow: hidden; }
+            #mobile-stub { display: flex; }
+        }
+
+        /* --- BACKGROUND BLUR EFFECTS --- */
+        .liquid-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px; height: 500px;
+            background: linear-gradient(135deg, var(--accent), #5856D6);
+            border-radius: 50%;
+            top: 10%; left: -5%;
+            animation: move 20s infinite alternate ease-in-out;
+        }
+
+        .blob-right {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: linear-gradient(135deg, #0047AB, #8E56D6);
+            border-radius: 50%;
+            bottom: -15%; right: -10%;
+            animation: moveRight 25s infinite alternate ease-in-out;
+            opacity: 0.6;
+        }
+
+        @keyframes move {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(120px, 80px) rotate(30deg); }
+        }
+
+        @keyframes moveRight {
+            from { transform: translate(0, 0) scale(1.1); }
+            to { transform: translate(-100px, -150px) scale(1); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .avatar-box {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            background: var(--modal-bg);
+            border-radius: 35px;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* TYPING EFFECT CSS */
+        h1 { font-size: 32px; font-weight: 700; letter-spacing: -1px; min-height: 38px; }
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--accent);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .nickname { color: var(--text-sec); font-size: 16px; margin-bottom: 20px; }
+        .bio-text { color: var(--text-sec); font-size: 14px; margin-bottom: 30px; line-height: 1.5; }
+        .highlight { color: var(--accent); font-weight: 600; }
+
+        /* --- CARDS STYLE --- */
+        .projects { display: flex; flex-direction: column; gap: 12px; }
+        
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card-content { padding: 20px 24px; }
+        .card:hover { transform: scale(1.01); border-color: rgba(255, 255, 255, 0.2); }
+
+        .stats-panel {
+            max-height: 0;
+            opacity: 0;
+            background: rgba(128, 128, 128, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 24px;
+            overflow: hidden;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        .card:hover .stats-panel {
+            max-height: 800px;
+            opacity: 1;
+            padding: 16px 24px 20px 24px;
+            border-top: 1px solid var(--glass-border);
+            overflow: visible;
+        }
+
+        .stat-item { display: flex; justify-content: space-between; margin: 6px 0; }
+        .stat-label { font-size: 10px; color: var(--text-sec); text-transform: uppercase; }
+        .stat-value { font-size: 12px; font-weight: 600; color: var(--accent); }
+
+        /* --- DROPDOWN MENU --- */
+        .download-wrapper { position: relative; flex: 1; }
+
+        .download-btn {
+            width: 100%;
+            padding: 9px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 0;
+            width: 220px; 
+            background: rgba(25, 25, 25, 0.7); 
+            backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            display: none;
+            flex-direction: column;
+            padding: 6px; 
+            z-index: 9999;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .dropdown-item {
+            padding: 10px 12px;
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            font-size: 12px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover { background: var(--accent); color: #fff; }
+        .dropdown-item span { font-size: 9px; color: rgba(255, 255, 255, 0.5); }
+
+        .changelog-btn {
+            flex: 1;
+            padding: 9px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(128, 128, 128, 0.1);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
+
+        /* --- MODAL STYLE --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
+            z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            width: 100%; max-width: 420px; max-height: 85vh;
+            border-radius: 35px; border: 1px solid var(--glass-border);
+            padding: 35px; overflow-y: auto; scrollbar-width: none;
+            position: relative;
+        }
+
+        .badge { font-size: 10px; padding: 3px 10px; border-radius: 8px; font-weight: 700; text-transform: uppercase; }
+        .badge.green { background: rgba(48, 209, 88, 0.2); color: var(--accent-green); }
+        .badge.blue { background: rgba(0, 122, 255, 0.2); color: var(--accent); }
+        .badge.orange { background: rgba(255, 159, 10, 0.2); color: var(--accent-orange); }
+
+        /* --- TIMER BOX --- */
+        .release-box {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .release-box-title { font-size: 10px; font-weight: 800; color: var(--accent); margin-bottom: 16px; letter-spacing: 2px; text-transform: uppercase; }
+        .countdown-timer { display: flex; justify-content: center; gap: 20px; }
+        .timer-unit { display: flex; flex-direction: column; align-items: center; }
+        .timer-unit span { font-size: 24px; font-family: monospace; font-weight: 700; }
+        .timer-unit small { font-size: 9px; color: var(--text-sec); margin-top: 4px; }
+
+        /* --- WORKSTATIONS SPECS --- */
+        .specs-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            margin-top: 12px;
+            padding: 24px;
+        }
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .device-info { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .device-icon { width: 60px; height: 60px; margin-bottom: 15px; object-fit: contain; }
+        .device-name { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
+        .spec-line { font-size: 10px; color: var(--text-sec); margin-bottom: 4px; width: 100%; display: center; justify-content: center; gap: 4px; }
+        .spec-line b { color: var(--text-main); font-weight: 600; }
+        
+        .footer { margin-top: 40px; font-size: 11px; color: var(--text-sec); opacity: 0.5; letter-spacing: 2px; text-align: center; }
     </style>
 </head>
 <body>
 
-<div class="bg-glow"></div>
-
-<div id="app">
-    <div id="screen-ban">
-        <h1 style="color: var(--danger); font-size: 4rem;">⚠</h1>
-        <h2 style="margin: 20px 0;">SYSTEM HALTED</h2>
-        <p style="opacity: 0.5; text-align: center; padding: 0 40px; font-size: 13px;">Обнаружена подозрительная активность. Доступ к ядру заблокирован.</p>
-        <div style="margin-top: 40px; display: flex; gap: 10px;">
-            <button onclick="core.reset()" style="background: none; border: 1px solid white; color: white; padding: 15px 25px; border-radius: 15px; cursor: pointer;">Сброс</button>
-            <button onclick="core.bypass()" style="background: var(--admin); border: none; color: white; padding: 15px 25px; border-radius: 15px; cursor: pointer; font-weight: 800;">ADMIN BYPASS</button>
+    <div id="mobile-stub">
+        <div class="liquid-bg">
+            <div class="blob"></div>
+            <div class="blob-right"></div>
+        </div>
+        <div class="stub-content">
+            <span class="stub-icon">Sorry</span>
+            <h1 id="lang-mob-title">Mobile version is under development</h1>
+            <p id="lang-mob-desc">Please visit this site from a desktop computer <br> to get full access to LIBDock and other tools.</p>
         </div>
     </div>
 
-    <div class="top-bar">
-        <div class="rank-tag" id="ui-rank">Rank: Beginner</div>
-        <div style="text-align: right">
-            <p style="font-size: 9px; opacity: 0.5; text-transform: uppercase;">Passive Net</p>
-            <p id="ui-passive" class="text-success" style="font-weight: 800; font-size: 13px;">+$0/s</p>
-        </div>
+    <div class="controls-top">
+        <button class="ui-btn" id="langToggle" onclick="toggleLang()">EN</button>
+        <button class="ui-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
     </div>
 
-    <div class="card-box">
-        <div class="main-card" id="ui-card">
-            <div>
-                <p class="balance-label">LIQUID ASSETS</p>
-                <div class="balance-value">$ <span id="ui-bal">0.00</span></div>
+    <div class="liquid-bg">
+        <div class="blob"></div>
+        <div class="blob-right"></div>
+    </div>
+
+    <div class="modal-overlay" id="changelogModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 id="lang-modal-title" style="font-size:22px;">Change Log</h2>
+                <button onclick="closeModal()" style="background:none; border:none; color:var(--text-main); font-size:28px; cursor:pointer;">&times;</button>
             </div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                <div>
-                    <p style="font-size: 9px; opacity: 0.4;">ACCOUNT TYPE</p>
-                    <p id="ui-card-type" style="font-size: 12px; font-weight: 800;">STANDARD GLASS</p>
+            <span style="color: var(--accent); font-weight: 700; font-size: 14px;">📅 1 January 2026</span>
+            <span style="font-size: 20px; font-weight: 800; margin: 8px 0 15px; display: block;">v1.7 Release</span>
+            <div id="lang-modal-body" style="font-size: 13px; line-height: 1.7; color: var(--text-sec); margin-bottom: 25px;">
                 </div>
-                <div style="width: 45px; height: 28px; background: rgba(255,255,255,0.1); border-radius: 6px;"></div>
-            </div>
+            <button class="download-btn" id="lang-modal-close" onclick="closeModal()" style="padding: 12px;">Close</button>
         </div>
     </div>
 
-    <div class="view-container">
-        <div id="view-home" class="view active">
-            <div class="action-grid">
-                <div class="item-tile" onclick="modals.open('work')"><i>💼</i>Работа</div>
-                <div class="item-tile" onclick="modals.open('dark')"><i>💀</i>Даркнет</div>
-                <div class="item-tile" onclick="core.daily()"><i>🎁</i>Бонус</div>
-                <div class="item-tile" onclick="modals.open('admin')"><i>⚡</i>Админ</div>
-            </div>
-            <h4 style="margin: 30px 0 15px; font-size: 11px; opacity: 0.4; letter-spacing: 1px;">МОИ ПРЕДПРИЯТИЯ</h4>
-            <div id="ui-assets"></div>
+    <div class="container">
+        <div class="avatar-box">
+            <img src="Logo.jpg" alt="Logo" onerror="this.style.display='none';">
+            <div style="position:absolute; z-index:-1; font-size:40px; font-weight:bold; color: #333;">W</div>
         </div>
-
-        <div id="view-market" class="view">
-            <h3 style="margin-bottom: 20px;">Глобальный рынок</h3>
-            <div id="ui-crypto"></div>
-        </div>
-    </div>
-
-    <div class="bottom-nav">
-        <div class="nav-tab active" onclick="ui.tab('home', this)">🏠</div>
-        <div class="nav-tab" onclick="ui.tab('market', this)">📈</div>
-        <div class="nav-tab" onclick="core.reset()">⚙️</div>
-    </div>
-
-    <div class="modal-wrap" id="modal-work" onclick="modals.close(event)">
-        <div class="modal-body">
-            <h3>Доступные задачи</h3>
-            <div class="list-item"><span>Dev Ops</span> <button class="action-btn" onclick="core.work(1500)">+$1,500</button></div>
-            <div class="list-item"><span>AI Training</span> <button class="action-btn" onclick="core.work(3000)">+$3,000</button></div>
-        </div>
-    </div>
-
-    <div class="modal-wrap" id="modal-dark" onclick="modals.close(event)">
-        <div class="modal-body">
-            <h3 class="text-danger">Опасный взлом</h3>
-            <p style="font-size: 12px; opacity: 0.6; margin: 15px 0;">Шанс успеха: 20%. Награда: $100,000. Провал: БАН.</p>
-            <button class="action-btn" style="width:100%; padding:20px; background:var(--danger); color:white" onclick="core.hack()">ЗАПУСТИТЬ ЭКСПЛОЙТ</button>
-        </div>
-    </div>
-
-    <div class="modal-wrap" id="modal-admin" onclick="modals.close(event)">
-        <div class="modal-body">
-            <h3 style="color:var(--admin)">Панель Создателя</h3>
-            <div id="admin-controls">
-                <p style="font-size: 12px; opacity: 0.5; margin-bottom: 20px;">Доступно только для ранга OVERLORD.</p>
-                <button class="action-btn admin-btn" style="width:100%; padding:20px; opacity:0.3" id="btn-cheat" onclick="core.cheat()">ДОБАВИТЬ $1,000,000</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-/**
- * CORE DATA ENGINE
- */
-let state = JSON.parse(localStorage.getItem('glass_v9_admin')) || {
-    bal: 222222222222,
-    passive: 0,
-    isBanned: false,
-    isAdmin: false,
-    rank: 1,
-    assets: [],
-    crypto: { btc: 0, eth: 0 },
-    prices: { btc: 58000, eth: 3100 }
-};
-
-const core = {
-    save() {
-        localStorage.setItem('glass_v9_admin', JSON.stringify(state));
-        this.updateUI();
-    },
-
-    updateUI() {
-        if (state.isBanned && !state.isAdmin) {
-            document.getElementById('screen-ban').style.display = 'flex';
-            return;
-        } else {
-            document.getElementById('screen-ban').style.display = 'none';
-        }
-
-        // Числа
-        document.getElementById('ui-bal').innerText = state.bal.toLocaleString(undefined, {minimumFractionDigits: 2});
-        document.getElementById('ui-passive').innerText = `+$${state.passive.toLocaleString()}/s`;
         
-        // Ранг и Админ-режим
-        const ranks = ["Beginner", "Hustler", "Capitalist", "Tycoon", "Elite", "Shadow Ruler", "OVERLORD"];
-        const rankLabel = document.getElementById('ui-rank');
-        const card = document.getElementById('ui-card');
+        <h1 id="typing-nick"></h1>
+        <p class="nickname">Open-Core-W1xced</p>
         
-        rankLabel.innerText = `Rank: ${state.isAdmin ? 'OVERLORD' : ranks[state.rank-1]}`;
-        
-        if (state.isAdmin) {
-            rankLabel.classList.add('admin-mode');
-            card.classList.add('admin-ui');
-            document.getElementById('ui-card-type').innerText = "CORE MASTER CARD";
-            document.getElementById('btn-cheat').style.opacity = "1";
-        }
+        <p class="bio-text" id="lang-bio">
+            Specialized in <span class="highlight">Lua Development</span> & <span class="highlight">Reverse Engineering</span>.<br>
+            Focusing on high-end software solutions and customization.
+        </p>
 
-        this.renderLists();
-    },
-
-    work(amt) {
-        state.bal += amt;
-        this.checkRank();
-        this.save();
-        modals.close('force');
-    },
-
-    daily() {
-        const gift = state.isAdmin ? 1000000 : 5000;
-        state.bal += gift;
-        alert(`Получено $${gift.toLocaleString()}`);
-        this.save();
-    },
-
-    checkRank() {
-        if (state.bal > 100000 && state.rank < 2) state.rank = 2;
-        if (state.bal > 500000 && state.rank < 3) state.rank = 3;
-        if (state.bal > 5000000 && state.rank < 4) state.rank = 4;
-    },
-
-    hack() {
-        if (Math.random() < 0.2) { // ШАНС ВЗЛОМА (20%)
-            state.bal += 100000;
-            alert("Взлом успешен!");
-        } else {
-            state.isBanned = true;
-        }
-        this.save();
-        modals.close('force');
-    },
-
-    bypass() {
-        state.isAdmin = true;
-        state.isBanned = false;
-        state.rank = 7;
-        state.bal = Infinity;
-        alert("BYPASS ACTIVE: WELCOME ADM1N");
-        this.save();
-    },
-
-    cheat() {
-        if(state.isAdmin) {
-            state.bal = (state.bal === Infinity) ? 999999999 : state.bal + 1000000;
-            this.save();
-        } else {
-            alert("ERROR: ACCESS DENIED");
-        }
-    },
-
-    buyAsset(name, price, income) {
-        if (state.bal >= price || state.isAdmin) {
-            if(!state.isAdmin) state.bal -= price;
-            state.passive += income;
-            state.assets.push(name);
-            this.save();
-        }
-    },
-
-    renderLists() {
-        const store = [
-            {n: 'Neural Server', p: 10000, i: 50},
-            {n: 'Cyber Cafe', p: 50000, i: 300},
-            {n: 'Stock Exchange', p: 1000000, i: 8000}
-        ];
-        document.getElementById('ui-assets').innerHTML = store.map(a => `
-            <div class="list-item">
-                <span><b>${a.n}</b><br><small style="opacity:0.5">+$${a.i}/s</small></span>
-                <button class="action-btn ${state.isAdmin?'admin-btn':''}" onclick="core.buyAsset('${a.n}', ${a.p}, ${a.i})">
-                    ${state.isAdmin ? 'FREE' : '$'+a.p.toLocaleString()}
-                </button>
+        <div class="projects">
+            <div class="card" onmouseleave="hideDropdowns()">
+                <div class="card-content">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:18px; font-weight:600;">LIBDock</span>
+                        <span class="badge green" id="lang-status-worked">Worked</span>
+                    </div>
+                    <p id="lang-libdock-desc" style="font-size:14px; color:var(--text-sec); margin-top:4px;">Advanced macOS-style for Windows.</p>
+                </div>
+                <div class="stats-panel">
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-start">Project Start</span><span class="stat-value">April 13, 2025</span></div>
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-ver">Version</span><span class="stat-value">v1.7 Release</span></div>
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-icons">Icons</span><span class="stat-value">1200+ Units</span></div>
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-by">Created By</span><span class="stat-value">W1xced & 127.0.0.0</span></div>
+                    <div style="display:flex; gap:8px; margin-top:16px; position:relative;">
+                        <div class="download-wrapper">
+                            <button class="download-btn" id="lang-dl-zip" onclick="toggleDropdown(event, 'libdockMenu')">Download ZIP</button>
+                            <div class="dropdown-menu" id="libdockMenu">
+                                <a href="https://download1655.mediafire.com/joglqcxvy75gVzxN-Oy_VsTIT6FeGfurcqYn1-9MIJdO0m9wfwQB6CiPboc2Tn-YvCyiZR8S_U0QJRKeandOHcDn-7sFCG-MZeVZOStQ9YkjtQ5HvoUl9vJ4kmkmeXVWo6mcyfZgZsOB0-Jabf95rqBYmEjj9A8NDJAnL_j99Ic/ler7e3s1bjkq5ep/LIBDock.zip" class="dropdown-item">Release <span id="lang-dl-rec">1.7 Released (Recommended)</span></a>
+                                <a href="https://download1078.mediafire.com/gb547wgeq9cgDOfyvUJOytToQOTxGNwTBOSfcuXVgPr3_SNMcEmNiGyyCyaZJePHo4AeUnmMI3dk1MQpew-x8PPAe8mAJqgJiY-IG-W2FxpL-I0PwYiRAbCjj2mnJ1qmPu4YnbmeD1Pz2CD7Pp4nLWkVOv3dihyLNdUMqAnhHPg/9dse9bgej78cjqt/LIBDock.zip" class="dropdown-item">Alpha <span>1.7 Alpha 3</span></a>
+                                <a href="https://download853.mediafire.com/q25bpi0f4qjg6q2aFvoQ2UcjdJf9dl_MiiAJjVw57Y6AgaRpy3OGhHmRmht7uGG7TH56rv7nrU-j9oqWLg-mo-w7GFaNnIWrwZ_56b6DAtGhQ7-aKOHXwfrRNNTKT-7Yg4NS-HyPp3S6zZJ2j0le59HQ9BUBDg40UlYBfbeP4hg/ujr7gtur4voe71z/LIBDock.zip" class="dropdown-item">Beta <span>1.7 Beta 3</span></a>
+                            </div>
+                        </div>
+                        <button class="changelog-btn" id="lang-cl-btn" onclick="openModal()">Change Log</button>
+                    </div>
+                </div>
             </div>
-        `).join('');
 
-        document.getElementById('ui-crypto').innerHTML = `
-            <div class="list-item">
-                <span>Bitcoin <small>$${state.prices.btc.toFixed(0)}</small></span>
-                <button class="action-btn" onclick="core.buyCrypto('btc')">BUY 1</button>
+            <div class="card" onmouseleave="hideDropdowns()">
+                <div class="card-content">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:18px; font-weight:600;">MyDockFinder</span>
+                        <span class="badge blue" id="lang-status-cracked">Cracked</span>
+                    </div>
+                    <p id="lang-mdf-desc" style="font-size:14px; color:var(--text-sec); margin-top:4px;">YaY Crack MyDockFinder.</p>
+                </div>
+                <div class="stats-panel">
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-rel">Released</span><span class="stat-value">December 13</span></div>
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-status">Status</span><span class="stat-value">Working</span></div>
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-ver-mdf">Version</span><span class="stat-value">1.10.9.7</span></div>
+                    
+                    <div style="display:flex; gap:8px; margin-top:16px; position:relative;">
+                        <div class="download-wrapper">
+                            <button class="download-btn" id="lang-dl-zip2" onclick="toggleDropdown(event, 'mdfMenu')">Download ZIP</button>
+                            <div class="dropdown-menu" id="mdfMenu">
+                                <a href="#" class="dropdown-item">Test version <span>Don't work</span></a>
+                                <a href="https://download1349.mediafire.com/znbfcgjzqaggR7cnc04VhYPFmR1iwv55h0P5kOesaAQXk9A1yBjBV-Z7aqyggJNhsF6eFgdwLRdoVNTfodaCJYgspBfh2lZ665PeBM_qu4g58e__A4B6AmZUEybDdbIXNPiDyjJloRwO4UoSn9Pi_0-ggL--AmjnWio-y9z0bgw/rnrd3el23glyjqx/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.7 <span id="lang-mdf-rec">Latest (Recommended)</span></a>
+                                <a href="https://download1336.mediafire.com/fqgqk5ks2ubgb2vStoAC9Svrry-qj1ePuUpJfKQpdnpvCy661rUn8nhyNqcSSSJVl3h9zvpM2ze8Femlb8q18u_juUBa8r8HLXGWrjesJr3rDu9AdGKwt4142EpGMN4FdMccznWbbOfmAWt2DDUONHj2ffgWdbyyVgXIL3H5e7w/wmoaebo6bo6280d/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.5 <span>Old Build</span></a>
+                                <a href="https://download947.mediafire.com/tghr7c26o5pg3RmvM0Z-ykPjZubH7MghrkWbv9-mx9XepWQrWtKwq2p3lGIbklYDbprJ0lgSztag6LcPiqmGcDKhRkTYuaVqdhk_pLORSngZKnkeKr_dW2FQe-P_X4pG3QLQPmH5SRAILMV-A78X5FB60ohxMnQdL--4C6sKq8I/mhw7palnkajuhu8/MyDockFinder+By+LIBDock.zip" class="dropdown-item">MyDockFinder 1.10.6 <span>Old Build</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="list-item">
-                <span>Ethereum <small>$${state.prices.eth.toFixed(0)}</small></span>
-                <button class="action-btn" onclick="core.buyCrypto('eth')">BUY 1</button>
-            </div>
-        `;
-    },
 
-    buyCrypto(sym) {
-        const p = state.prices[sym];
-        if (state.bal >= p || state.isAdmin) {
-            if(!state.isAdmin) state.bal -= p;
-            state.crypto[sym]++;
-            this.save();
+            <div class="card">
+                <div class="card-content">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:18px; font-weight:600;">ACCautoCracker</span>
+                        <span class="badge orange" id="lang-status-priv">Private</span>
+                    </div>
+                    <p id="lang-acc-desc" style="font-size:14px; color:var(--text-sec); margin-top:4px;">Professional automated game cracking tool.</p>
+                </div>
+            </div>
+
+            <a href="https://t.me/LIBDock" class="card" style="border-color: rgba(0, 122, 255, 0.4); margin-top: 12px;">
+                <div class="card-content">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="lang-tg-join" style="font-size:18px; font-weight:600;">Join Telegram Channel</span>
+                        <span style="color: var(--accent);">→</span>
+                    </div>
+                    <p id="lang-tg-desc" style="font-size:14px; color:var(--text-sec); margin-top:4px;">Get the latest updates on @LIBDock channel.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="release-box">
+            <p class="release-box-title" id="lang-timer-title">COUNTDOWN 2027 YEARS</p>
+            <div class="countdown-timer">
+                <div class="timer-unit"><span id="d">00</span><small id="lang-t-d">DAYS</small></div>
+                <div class="timer-unit"><span id="h">00</span><small id="lang-t-h">HRS</small></div>
+                <div class="timer-unit"><span id="m">00</span><small id="lang-t-m">MIN</small></div>
+                <div class="timer-unit"><span id="s">00</span><small id="lang-t-s">SEC</small></div>
+            </div>
+        </div>
+
+        <div class="specs-card">
+            <p id="lang-specs-title" style="font-size: 10px; font-weight: 800; color: var(--accent); margin-bottom: 20px; text-align: center; letter-spacing: 1.5px;">MY WORKSTATIONS</p>
+            <div class="specs-grid">
+                <div class="device-info">
+                    <img src="LogoMacBook.png" alt="MacBook" class="device-icon" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg';">
+                    <p class="device-name">MacBook Pro</p>
+                    <p class="spec-line"><span id="lang-chip">Chip</span> <b>M2</b></p>
+                    <p class="spec-line"><span id="lang-mem1">Memory</span> <b>32GB</b></p>
+                    <p class="spec-line"><span id="lang-disk">Disk</span> <b>MacOS</b></p>
+                </div>
+                <div class="device-info" style="border-left: 1px solid var(--glass-border); padding-left: 15px;">
+                    <img src="LogoWindows_dark.png" id="winIcon" alt="Windows" class="device-icon">
+                    <p class="device-name">Windows PC</p>
+                    <p class="spec-line">CPU <b>i9 14900k</b></p>
+                    <p class="spec-line"><span id="lang-mem2">Memory</span> <b>32GB</b></p>
+                    <p class="spec-line">VRAM <b>8GB</b></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer" id="lang-footer">Site By W1xced • 2026</div>
+    </div>
+
+    <script>
+        // --- TRANSLATION SYSTEM ---
+        const translations = {
+            en: {
+                mobTitle: "Mobile version is under development",
+                mobDesc: "Please visit this site from a desktop computer <br> to get full access to LIBDock and other tools.",
+                bio: 'Specialized in <span class="highlight">Lua Development</span> & <span class="highlight">Reverse Engineering</span>.<br>Focusing on high-end software solutions and customization.',
+                statusWorked: "Worked", statusCracked: "Cracked", statusPriv: "Private",
+                libDesc: "Advanced macOS-style for Windows.",
+                statStart: "Project Start", statVer: "Version", statIcons: "Icons", statBy: "Created By", statRel: "Released", statStatus: "Status",
+                dlZip: "Download ZIP", dlRec: "1.7 Released (Recommended)", clBtn: "Change Log",
+                mdfDesc: "YaY Crack MyDockFinder.", accDesc: "Professional automated game cracking tool.",
+                mdfRec: "Latest (Recommended)",
+                tgJoin: "Join Telegram Channel", tgDesc: "Get the latest updates on @LIBDock channel.",
+                timerTitle: "COUNTDOWN 2027 YEARS", tD: "DAYS", tH: "HRS", tM: "MIN", tS: "SEC",
+                specsTitle: "MY WORKSTATIONS", chip: "Chip", mem: "Memory", disk: "Disk",
+                footer: "Site By W1xced • 2026",
+                modalTitle: "Change Log", modalClose: "Close",
+                modalBody: `
+                    <strong>Totally added from Beta/Alpha/dev:</strong><br>
+                    • Add - 200+ icons<br>
+                    • Add - Test MacOS 26 Icons<br>
+                    • Add - MyDockFinder (Last Build)<br>
+                    • Add - MacOS 26 Cursor<br>
+                    • Fixed - Name icons<br>
+                    • Update - ReadMe<br>
+                    • Update - Theme<br><br>
+                    <strong style="color: var(--accent);">What's new add Released?</strong><br>
+                    • Add - 90+ icons (MacOS 26)<br>
+                    • Add - 40+ icons (MacOS 15)<br>
+                    • Add - MacOS 15 Cursor<br>
+                    • Add - Management - Documentation about LIBDock<br>
+                    • Add - Screenshot for check Design apps in LIBDock/apps<br>
+                    • Add - Support Russia Language For ReadMe/Management<br>
+                    • Add - Seelen UI v2.4.11 (Apps)<br>
+                    • Add - Rainmeter (Apps + theme)<br>
+                    • Add - Windhawk (Apps)<br>
+                    • Update - ReadMe (More info)<br>
+                    • Fix - Icons MacOS 15 corrected by 70 percent (Sorry)<br><br>
+                    <strong>Who help:</strong> kRaken, Kanmani Karthick
+                `
+            },
+            ru: {
+                mobTitle: "Мобильная версия в разработке",
+                mobDesc: "Пожалуйста, посетите сайт с компьютера <br> для полного доступа к LIBDock и инструментам.",
+                bio: 'Специализируюсь на <span class="highlight">Lua Разработке</span> и <span class="highlight">Реверс-инжиниринге</span>.<br>Создаю софт и решения для кастомизации систем.',
+                statusWorked: "В работе", statusCracked: "Взломано", statusPriv: "Приватно",
+                libDesc: "Продвинутый macOS-стиль для Windows.",
+                statStart: "Старт проекта", statVer: "Версия", statIcons: "Иконки", statBy: "Авторы", statRel: "Релиз", statStatus: "Статус",
+                dlZip: "Скачать ZIP", dlRec: "1.7 Релиз (Рекомендуется)", clBtn: "Чейнджлог",
+                mdfDesc: "Ура, взломали MyDockFinder.", accDesc: "Профессиональный инструмент для авто-кряка игр.",
+                mdfRec: "Последняя (Рекомендуется)",
+                tgJoin: "Telegram Канал", tgDesc: "Свежие обновления в канале @LIBDock.",
+                timerTitle: "ОТСЧЕТ ДО 2027 ГОДА", tD: "ДНЕЙ", tH: "ЧАС", tM: "МИН", tS: "СЕК",
+                specsTitle: "МОИ РАБОЧИЕ СТАНЦИИ", chip: "Чип", mem: "Память", disk: "Диск",
+                footer: "Сайт от W1xced • 2026",
+                modalTitle: "Список изменений", modalClose: "Закрыть",
+                modalBody: `
+                    <strong>Добавлено из Beta/Alpha/dev:</strong><br>
+                    • Добавлено - 200+ иконок<br>
+                    • Добавлено - Тест MacOS 26 иконок<br>
+                    • Добавлено - MyDockFinder (Last Build)<br>
+                    • Добавлено - Курсор MacOS 26<br>
+                    • Исправлено - Названия иконок<br>
+                    • Обновлено - ReadMe<br>
+                    • Обновлено - Тема<br><br>
+                    <strong style="color: var(--accent);">Что нового в релизе?</strong><br>
+                    • Добавлено - 90+ иконок (MacOS 26)<br>
+                    • Добавлено - 40+ иконок (MacOS 15)<br>
+                    • Добавлено - Курсор MacOS 15<br>
+                    • Добавлено - Management - Документация о LIBDock<br>
+                    • Добавлено - Скриншоты дизайна приложений в LIBDock/apps<br>
+                    • Добавлено - Поддержка русского языка для документации<br>
+                    • Добавлено - Seelen UI v2.4.11 (Приложения)<br>
+                    • Добавлено - Rainmeter (Приложения + тема)<br>
+                    • Добавлено - Windhawk (Приложения)<br>
+                    • Обновлено - ReadMe (Больше информации)<br>
+                    • Исправлено - Иконки MacOS 15 исправлены на 70% (Извините)<br><br>
+                    <strong>Кто помогал:</strong> kRaken, Kanmani Karthick
+                `
+            },
+            ua: {
+                mobTitle: "Мобільна версія у розробці",
+                mobDesc: "Будь ласка, зайдіть з комп'ютера <br> для повного доступу до LIBDock та інструментів.",
+                bio: 'Спеціалізуюсь на <span class="highlight">Lua Розробці</span> та <span class="highlight">Реверс-інжинірингу</span>.<br>Створюю софт та рішення для кастомізації систем.',
+                statusWorked: "Працює", statusCracked: "Зламано", statusPriv: "Приватно",
+                libDesc: "Просунутий macOS-стиль для Windows.",
+                statStart: "Старт проєкту", statVer: "Версия", statIcons: "Іконки", statBy: "Автори", statRel: "Реліз", statStatus: "Статус",
+                dlZip: "Завантажити ZIP", dlRec: "1.7 Реліз (Рекомендовано)", clBtn: "Чейнджлог",
+                mdfDesc: "Ура, зламали MyDockFinder.", accDesc: "Професійний інструмент для авто-кряку ігор.",
+                mdfRec: "Остання (Рекомендовано)",
+                tgJoin: "Telegram Канал", tgDesc: "Останні оновлення у каналі @LIBDock.",
+                timerTitle: "ВІДЛІК ДО 2027 РОКУ", tD: "ДНІВ", tH: "ГОД", tM: "ХВИЛ", tS: "СЕК",
+                specsTitle: "МОЇ РОБОЧІ СТАНЦІЇ", chip: "Чіп", mem: "Пам'ять", disk: "Диск",
+                footer: "Сайт від W1xced • 2026",
+                modalTitle: "Список змін", modalClose: "Закрити",
+                modalBody: `
+                    <strong>Додано з Beta/Alpha/dev:</strong><br>
+                    • Додано - 200+ іконок<br>
+                    • Додано - Тест MacOS 26 іконок<br>
+                    • Додано - MyDockFinder (Last Build)<br>
+                    • Додано - Курсор MacOS 26<br>
+                    • Виправлено - Назви іконок<br>
+                    • Оновлено - ReadMe<br>
+                    • Оновлено - Тема<br><br>
+                    <strong style="color: var(--accent);">Що нового у релізі?</strong><br>
+                    • Додано - 90+ іконок (MacOS 26)<br>
+                    • Додано - 40+ іконок (MacOS 15)<br>
+                    • Додано - Курсор MacOS 15<br>
+                    • Додано - Management - Документація про LIBDock<br>
+                    • Додано - Скриншоти дизайну додатків у LIBDock/apps<br>
+                    • Додано - Підтримка української мови для документації<br>
+                    • Додано - Seelen UI v2.4.11 (Додатки)<br>
+                    • Додано - Rainmeter (Додатки + тема)<br>
+                    • Додано - Windhawk (Додатки)<br>
+                    • Оновлено - ReadMe (Більше інформації)<br>
+                    • Виправлено - Іконки MacOS 15 виправлено на 70% (Вибачте)<br><br>
+                    <strong>Хто допомагав:</strong> kRaken, Kanmani Karthick
+                `
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function applyLang() {
+            const l = translations[currentLang];
+            document.getElementById('langToggle').innerText = currentLang.toUpperCase();
+            document.getElementById('lang-mob-title').innerText = l.mobTitle;
+            document.getElementById('lang-mob-desc').innerHTML = l.mobDesc;
+            document.getElementById('lang-bio').innerHTML = l.bio;
+            document.getElementById('lang-status-worked').innerText = l.statusWorked;
+            document.getElementById('lang-status-cracked').innerText = l.statusCracked;
+            document.getElementById('lang-status-priv').innerText = l.statusPriv;
+            document.getElementById('lang-libdock-desc').innerText = l.libDesc;
+            document.getElementById('lang-stat-start').innerText = l.statStart;
+            document.getElementById('lang-stat-ver').innerText = l.statVer;
+            document.getElementById('lang-stat-icons').innerText = l.statIcons;
+            document.getElementById('lang-stat-by').innerText = l.statBy;
+            document.getElementById('lang-dl-zip').innerText = l.dlZip;
+            document.getElementById('lang-dl-zip2').innerText = l.dlZip;
+            document.getElementById('lang-dl-rec').innerText = l.dlRec;
+            document.getElementById('lang-cl-btn').innerText = l.clBtn;
+            document.getElementById('lang-mdf-desc').innerText = l.mdfDesc;
+            document.getElementById('lang-stat-rel').innerText = l.statRel;
+            document.getElementById('lang-stat-status').innerText = l.statStatus;
+            document.getElementById('lang-stat-ver-mdf').innerText = l.statVer;
+            document.getElementById('lang-mdf-rec').innerText = l.mdfRec;
+            document.getElementById('lang-acc-desc').innerText = l.accDesc;
+            document.getElementById('lang-tg-join').innerText = l.tgJoin;
+            document.getElementById('lang-tg-desc').innerText = l.tgDesc;
+            document.getElementById('lang-timer-title').innerText = l.timerTitle;
+            document.getElementById('lang-t-d').innerText = l.tD;
+            document.getElementById('lang-t-h').innerText = l.tH;
+            document.getElementById('lang-t-m').innerText = l.tM;
+            document.getElementById('lang-t-s').innerText = l.tS;
+            document.getElementById('lang-specs-title').innerText = l.specsTitle;
+            document.getElementById('lang-chip').innerText = l.chip;
+            document.getElementById('lang-mem1').innerText = l.mem;
+            document.getElementById('lang-mem2').innerText = l.mem;
+            document.getElementById('lang-disk').innerText = l.disk;
+            document.getElementById('lang-footer').innerText = l.footer;
+            document.getElementById('lang-modal-title').innerText = l.modalTitle;
+            document.getElementById('lang-modal-body').innerHTML = l.modalBody;
+            document.getElementById('lang-modal-close').innerText = l.modalClose;
         }
-    },
 
-    reset() { if(confirm("Full Reset?")) { localStorage.clear(); location.reload(); } }
-};
+        function toggleLang() {
+            const order = ['en', 'ru', 'ua'];
+            let idx = order.indexOf(currentLang);
+            currentLang = order[(idx + 1) % order.length];
+            localStorage.setItem('lang', currentLang);
+            applyLang();
+        }
 
-const ui = {
-    tab(id, el) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(`view-${id}`).classList.add('active');
-        el.classList.add('active');
-    }
-};
+        // --- TYPING EFFECT ---
+        const nickName = "W1xced";
+        const typingElement = document.getElementById('typing-nick');
+        let typeIdx = 0;
+        function type() {
+            if (typeIdx < nickName.length) {
+                typingElement.innerHTML = nickName.slice(0, typeIdx + 1) + '<span class="cursor"></span>';
+                typeIdx++;
+                setTimeout(type, 150);
+            } else {
+                typingElement.innerHTML = nickName + '<span class="cursor"></span>';
+            }
+        }
 
-const modals = {
-    open(id) { document.getElementById(`modal-${id}`).classList.add('active'); },
-    close(e) { if(e === 'force' || e.target.classList.contains('modal-wrap')) { 
-        document.querySelectorAll('.modal-wrap').forEach(m => m.classList.remove('active')); 
-    } }
-};
+        // --- THEME ---
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            document.getElementById('themeToggle').innerText = isLight ? '🔆' : '🌙';
+            document.getElementById('winIcon').src = isLight ? 'LogoWindows_light.png' : 'LogoWindows_dark.png';
+        }
 
-// Global Loop
-setInterval(() => {
-    if(!state.isBanned || state.isAdmin) {
-        if (state.bal !== Infinity) state.bal += state.passive;
-        state.prices.btc += (Math.random() - 0.5) * 100;
-        state.prices.eth += (Math.random() - 0.5) * 30;
-        core.save();
-    }
-}, 1000);
+        // --- INIT ---
+        window.addEventListener('load', () => {
+            applyLang();
+            setTimeout(type, 500);
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').innerText = '🔆';
+                document.getElementById('winIcon').src = 'LogoWindows_light.png';
+            } else {
+                document.getElementById('winIcon').src = 'LogoWindows_dark.png';
+            }
+        });
 
-core.updateUI();
-</script>
+        function toggleDropdown(event, menuId) {
+            event.stopPropagation();
+            const menus = ['libdockMenu', 'mdfMenu'];
+            menus.forEach(id => {
+                const m = document.getElementById(id);
+                if (id === menuId) {
+                    m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+                } else if (m) {
+                    m.style.display = 'none';
+                }
+            });
+        }
+
+        function hideDropdowns() {
+            const menus = ['libdockMenu', 'mdfMenu'];
+            menus.forEach(id => {
+                const m = document.getElementById(id);
+                if (m) m.style.display = 'none';
+            });
+        }
+
+        window.onclick = function(event) { if (!event.target.matches('.download-btn')) hideDropdowns(); }
+        function openModal() { document.getElementById('changelogModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeModal() { document.getElementById('changelogModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+        function updateTimer() {
+            const target = new Date('January 1, 2027 00:00:00').getTime();
+            const diff = target - new Date().getTime();
+            if (diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / 86400000);
+                document.getElementById('h').innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+                document.getElementById('m').innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+                document.getElementById('s').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function checkDevice() {
+            const stub = document.getElementById('mobile-stub');
+            if (window.innerWidth <= 768) { stub.style.display = 'flex'; document.body.style.overflow = 'hidden'; } 
+            else { stub.style.display = 'none'; document.body.style.overflow = 'auto'; }
+        }
+        window.addEventListener('resize', checkDevice);
+        checkDevice();
+    </script>
 </body>
 </html>
