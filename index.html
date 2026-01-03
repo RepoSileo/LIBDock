@@ -413,7 +413,7 @@
         </p>
 
         <div class="projects">
-            <div class="card" onmouseleave="hideDropdown()">
+            <div class="card" onmouseleave="hideDropdowns()">
                 <div class="card-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:18px; font-weight:600;">LIBDock</span>
@@ -428,11 +428,11 @@
                     <div class="stat-item"><span class="stat-label" id="lang-stat-by">Created By</span><span class="stat-value">W1xced & 127.0.0.0</span></div>
                     <div style="display:flex; gap:8px; margin-top:16px; position:relative;">
                         <div class="download-wrapper">
-                            <button class="download-btn" id="lang-dl-zip" onclick="toggleDropdown(event)">Download ZIP</button>
+                            <button class="download-btn" id="lang-dl-zip" onclick="toggleDropdown(event, 'libdockMenu')">Download ZIP</button>
                             <div class="dropdown-menu" id="libdockMenu">
-                                <a href="https://download1655.mediafire.com/86mdxt9ma9vgVO5j7RATdCv6GmSnLTorpRQWkeKUdMJcWJHLR6vRzJIFWboDAFOizchUII9NsWIhm3CXRE9p1_kTY7eRfTIOjb5tK02C4mRLOjggkmVZDks0tRIDTJ6lAPFdjIeiImcXR8837PEbedtsXq8y26Vj0tg6qeoMPT0/ler7e3s1bjkq5ep/LIBDock.zip" class="dropdown-item">Release <span id="lang-dl-rec">1.7 Released (Recommended)</span></a>
-                                <a href="https://download853.mediafire.com/sr7ypb5bs2jgf1ZPu7r-J8j1TnYM3fBPfJNCrg6asAlPh5VHoaB-VDM3nIq6jsfHFULgRewBzjql8ro6G-39sXCKExvODeicO9fJ8IZN1mnyplwOy55nIZ1ByZ0Xflz1cx4Bg-g4bBDwPPuwMj0kOSNHgdfQIzuhQM6ziJpZ_GY/ujr7gtur4voe71z/LIBDock.zip" class="dropdown-item">Beta <span>1.7 Alpha 3</span></a>
-                                <a href="https://download1078.mediafire.com/mmw2tgwha29g8gzozbj_PGC8Q3AhldgluvhvHhO6eoAVYRqymsPTuApE55rqgBNHyVP8E561_X7DYiAXyQn1CkKDq3nE2SJEA2BnIqq7Zkhzn0Qme98nvCPi3YNaVCjfF1TQ8rEY_7w9vI_4cHaHwGhMuMDLVPfgBnykRpm7Wr4/9dse9bgej78cjqt/LIBDock.zip" class="dropdown-item">Alpha <span>1.7 Beta 3</span></a>
+                                <a href="https://download1655.mediafire.com/joglqcxvy75gVzxN-Oy_VsTIT6FeGfurcqYn1-9MIJdO0m9wfwQB6CiPboc2Tn-YvCyiZR8S_U0QJRKeandOHcDn-7sFCG-MZeVZOStQ9YkjtQ5HvoUl9vJ4kmkmeXVWo6mcyfZgZsOB0-Jabf95rqBYmEjj9A8NDJAnL_j99Ic/ler7e3s1bjkq5ep/LIBDock.zip" class="dropdown-item">Release <span id="lang-dl-rec">1.7 Released (Recommended)</span></a>
+                                <a href="https://download1078.mediafire.com/gb547wgeq9cgDOfyvUJOytToQOTxGNwTBOSfcuXVgPr3_SNMcEmNiGyyCyaZJePHo4AeUnmMI3dk1MQpew-x8PPAe8mAJqgJiY-IG-W2FxpL-I0PwYiRAbCjj2mnJ1qmPu4YnbmeD1Pz2CD7Pp4nLWkVOv3dihyLNdUMqAnhHPg/9dse9bgej78cjqt/LIBDock.zip" class="dropdown-item">Alpha <span>1.7 Alpha 3</span></a>
+                                <a href="https://download853.mediafire.com/q25bpi0f4qjg6q2aFvoQ2UcjdJf9dl_MiiAJjVw57Y6AgaRpy3OGhHmRmht7uGG7TH56rv7nrU-j9oqWLg-mo-w7GFaNnIWrwZ_56b6DAtGhQ7-aKOHXwfrRNNTKT-7Yg4NS-HyPp3S6zZJ2j0le59HQ9BUBDg40UlYBfbeP4hg/ujr7gtur4voe71z/LIBDock.zip" class="dropdown-item">Beta <span>1.7 Beta 3</span></a>
                             </div>
                         </div>
                         <button class="changelog-btn" id="lang-cl-btn" onclick="openModal()">Change Log</button>
@@ -440,7 +440,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" onmouseleave="hideDropdowns()">
                 <div class="card-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:18px; font-weight:600;">MyDockFinder</span>
@@ -451,8 +451,19 @@
                 <div class="stats-panel">
                     <div class="stat-item"><span class="stat-label" id="lang-stat-rel">Released</span><span class="stat-value">December 13</span></div>
                     <div class="stat-item"><span class="stat-label" id="lang-stat-status">Status</span><span class="stat-value">Working</span></div>
-                    <div class="stat-item"><span class="stat-label" id="lang-stat-status">Version</span><span class="stat-value">1.10.9.7</span></div>
-                    <a href="https://download1349.mediafire.com/1axe1e0lx64gJzIRUu1PzlJyazeQqoIaKgkX89X53HAAOViye-cAeyH-PMKkVueCWjcxUMmDLYm77rGEUZi2cmEQnBf6YbzgQowgJEZrWRWz7-XQu7el2R58yUds8r3TOcx4ohSEPnK4lYiQN4zb6JnGot6WcKEplKARQ1oj8RE/rnrd3el23glyjqx/MyDockFinder.zip" class="download-btn" id="lang-dl-zip2" style="margin-top:12px; text-decoration:none;">Download ZIP</a>
+                    <div class="stat-item"><span class="stat-label" id="lang-stat-ver-mdf">Version</span><span class="stat-value">1.10.9.8</span></div>
+                    
+                    <div style="display:flex; gap:8px; margin-top:16px; position:relative;">
+                        <div class="download-wrapper">
+                            <button class="download-btn" id="lang-dl-zip2" onclick="toggleDropdown(event, 'mdfMenu')">Download ZIP</button>
+                            <div class="dropdown-menu" id="mdfMenu">
+                                <a href="" class="dropdown-item">Test <span id="lang-mdf-rec">Now work</span></a>
+                                <a href="https://download1349.mediafire.com/znbfcgjzqaggR7cnc04VhYPFmR1iwv55h0P5kOesaAQXk9A1yBjBV-Z7aqyggJNhsF6eFgdwLRdoVNTfodaCJYgspBfh2lZ665PeBM_qu4g58e__A4B6AmZUEybDdbIXNPiDyjJloRwO4UoSn9Pi_0-ggL--AmjnWio-y9z0bgw/rnrd3el23glyjqx/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.7 <span>Latest (Recommended)</span></a>
+                                <a href="https://download1336.mediafire.com/fqgqk5ks2ubgb2vStoAC9Svrry-qj1ePuUpJfKQpdnpvCy661rUn8nhyNqcSSSJVl3h9zvpM2ze8Femlb8q18u_juUBa8r8HLXGWrjesJr3rDu9AdGKwt4142EpGMN4FdMccznWbbOfmAWt2DDUONHj2ffgWdbyyVgXIL3H5e7w/wmoaebo6bo6280d/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.5 <span>Old Build</span></a>
+                                <a href="https://download947.mediafire.com/tghr7c26o5pg3RmvM0Z-ykPjZubH7MghrkWbv9-mx9XepWQrWtKwq2p3lGIbklYDbprJ0lgSztag6LcPiqmGcDKhRkTYuaVqdhk_pLORSngZKnkeKr_dW2FQe-P_X4pG3QLQPmH5SRAILMV-A78X5FB60ohxMnQdL--4C6sKq8I/mhw7palnkajuhu8/MyDockFinder+By+LIBDock.zip" class="dropdown-item">MyDockFinder 1.10.6 <span>Old Build</span></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -522,6 +533,7 @@
                 statStart: "Project Start", statVer: "Version", statIcons: "Icons", statBy: "Created By", statRel: "Released", statStatus: "Status",
                 dlZip: "Download ZIP", dlRec: "1.7 Released (Recommended)", clBtn: "Change Log",
                 mdfDesc: "YaY Crack MyDockFinder.", accDesc: "Professional automated game cracking tool.",
+                mdfRec: "Latest (Recommended)",
                 tgJoin: "Join Telegram Channel", tgDesc: "Get the latest updates on @LIBDock channel.",
                 timerTitle: "COUNTDOWN 2027 YEARS", tD: "DAYS", tH: "HRS", tM: "MIN", tS: "SEC",
                 specsTitle: "MY WORKSTATIONS", chip: "Chip", mem: "Memory", disk: "Disk",
@@ -560,6 +572,7 @@
                 statStart: "Старт проекта", statVer: "Версия", statIcons: "Иконки", statBy: "Авторы", statRel: "Релиз", statStatus: "Статус",
                 dlZip: "Скачать ZIP", dlRec: "1.7 Релиз (Рекомендуется)", clBtn: "Чейнджлог",
                 mdfDesc: "Ура, взломали MyDockFinder.", accDesc: "Профессиональный инструмент для авто-кряка игр.",
+                mdfRec: "Последняя (Рекомендуется)",
                 tgJoin: "Telegram Канал", tgDesc: "Свежие обновления в канале @LIBDock.",
                 timerTitle: "ОТСЧЕТ ДО 2027 ГОДА", tD: "ДНЕЙ", tH: "ЧАС", tM: "МИН", tS: "СЕК",
                 specsTitle: "МОИ РАБОЧИЕ СТАНЦИИ", chip: "Чип", mem: "Память", disk: "Диск",
@@ -598,6 +611,7 @@
                 statStart: "Старт проєкту", statVer: "Версія", statIcons: "Іконки", statBy: "Автори", statRel: "Реліз", statStatus: "Статус",
                 dlZip: "Завантажити ZIP", dlRec: "1.7 Реліз (Рекомендовано)", clBtn: "Чейнджлог",
                 mdfDesc: "Ура, зламали MyDockFinder.", accDesc: "Професійний інструмент для авто-кряку ігор.",
+                mdfRec: "Остання (Рекомендовано)",
                 tgJoin: "Telegram Канал", tgDesc: "Останні оновлення у каналі @LIBDock.",
                 timerTitle: "ВІДЛІК ДО 2027 РОКУ", tD: "ДНІВ", tH: "ГОД", tM: "ХВИЛ", tS: "СЕК",
                 specsTitle: "МОЇ РОБОЧІ СТАНЦІЇ", chip: "Чіп", mem: "Пам'ять", disk: "Диск",
@@ -652,6 +666,8 @@
             document.getElementById('lang-mdf-desc').innerText = l.mdfDesc;
             document.getElementById('lang-stat-rel').innerText = l.statRel;
             document.getElementById('lang-stat-status').innerText = l.statStatus;
+            document.getElementById('lang-stat-ver-mdf').innerText = l.statVer;
+            document.getElementById('lang-mdf-rec').innerText = l.mdfRec;
             document.getElementById('lang-acc-desc').innerText = l.accDesc;
             document.getElementById('lang-tg-join').innerText = l.tgJoin;
             document.getElementById('lang-tg-desc').innerText = l.tgDesc;
@@ -715,18 +731,28 @@
             }
         });
 
-        function toggleDropdown(event) {
+        function toggleDropdown(event, menuId) {
             event.stopPropagation();
-            const menu = document.getElementById('libdockMenu');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+            const menus = ['libdockMenu', 'mdfMenu'];
+            menus.forEach(id => {
+                const m = document.getElementById(id);
+                if (id === menuId) {
+                    m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+                } else if (m) {
+                    m.style.display = 'none';
+                }
+            });
         }
 
-        function hideDropdown() {
-            const menu = document.getElementById('libdockMenu');
-            if (menu) menu.style.display = 'none';
+        function hideDropdowns() {
+            const menus = ['libdockMenu', 'mdfMenu'];
+            menus.forEach(id => {
+                const m = document.getElementById(id);
+                if (m) m.style.display = 'none';
+            });
         }
 
-        window.onclick = function(event) { if (!event.target.matches('.download-btn')) hideDropdown(); }
+        window.onclick = function(event) { if (!event.target.matches('.download-btn')) hideDropdowns(); }
         function openModal() { document.getElementById('changelogModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeModal() { document.getElementById('changelogModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
 
