@@ -458,7 +458,7 @@
                         <div class="download-wrapper">
                             <button class="download-btn" id="lang-dl-zip2" onclick="toggleDropdown(event, 'mdfMenu')">Download ZIP</button>
                             <div class="dropdown-menu" id="mdfMenu">
-                                <a href="https://download1529.mediafire.com/7lu0egj0pmbgtvHUMm6iVPybmV1bcnvSaIJHyHC2h0gV99CUX0IMg0Z5lZtfrJ17zE3CdFww1SHqXkRkkAUxmiKG3jwLPXWTRkyKOnof8aEyqVHYYsWswsO0TG6VDdq-4XizdRNnVA7yfgyfBGenuGRe1Ewmd3caVlAG_Uv0Mhw/lqfrr68f3qs5i84/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.8 <span>Latest (Recommended)</span></a>
+                                <a href="https://download1529.mediafire.com/7lu0egj0pmbgtvHUMm6iVPybmV1bcnvSaIJHyHC2h0gV99CUX0IMg0Z5lZtfrJ17zE3CdFww1SHqXkRkkAUxmiKG3jwLPXWTRkyKOnof8aEyqVHYYsWswsO0TG6VDdq-4XizdRNnVA7yfgyfBGenuGRe1Ewmd3caVlAG_Uv0Mhw/lqfrr68f3qs5i84/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.8 <span id="lang-mdf-rec">Latest (Recommended)</span></a>
                                 <a href="https://download1349.mediafire.com/znbfcgjzqaggR7cnc04VhYPFmR1iwv55h0P5kOesaAQXk9A1yBjBV-Z7aqyggJNhsF6eFgdwLRdoVNTfodaCJYgspBfh2lZ665PeBM_qu4g58e__A4B6AmZUEybDdbIXNPiDyjJloRwO4UoSn9Pi_0-ggL--AmjnWio-y9z0bgw/rnrd3el23glyjqx/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.7 <span>Old Build</span></a>
                                 <a href="https://download1336.mediafire.com/fqgqk5ks2ubgb2vStoAC9Svrry-qj1ePuUpJfKQpdnpvCy661rUn8nhyNqcSSSJVl3h9zvpM2ze8Femlb8q18u_juUBa8r8HLXGWrjesJr3rDu9AdGKwt4142EpGMN4FdMccznWbbOfmAWt2DDUONHj2ffgWdbyyVgXIL3H5e7w/wmoaebo6bo6280d/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.5 <span>Old Build</span></a>
                                 <a href="https://download947.mediafire.com/tghr7c26o5pg3RmvM0Z-ykPjZubH7MghrkWbv9-mx9XepWQrWtKwq2p3lGIbklYDbprJ0lgSztag6LcPiqmGcDKhRkTYuaVqdhk_pLORSngZKnkeKr_dW2FQe-P_X4pG3QLQPmH5SRAILMV-A78X5FB60ohxMnQdL--4C6sKq8I/mhw7palnkajuhu8/MyDockFinder+By+LIBDock.zip" class="dropdown-item">MyDockFinder 1.10.6 <span>Old Build</span></a>
@@ -655,45 +655,53 @@
 
         function applyLang() {
             const l = translations[currentLang];
-            document.getElementById('langToggle').innerText = currentLang.toUpperCase();
-            document.getElementById('lang-mob-title').innerText = l.mobTitle;
-            document.getElementById('lang-mob-desc').innerHTML = l.mobDesc;
-            document.getElementById('lang-bio').innerHTML = l.bio;
-            document.getElementById('lang-status-worked').innerText = l.statusWorked;
-            document.getElementById('lang-status-cracked').innerText = l.statusCracked;
-            document.getElementById('lang-status-github').innerText = l.statusGithub;
-            document.getElementById('lang-libdock-desc').innerText = l.libDesc;
-            document.getElementById('lang-stat-start').innerText = l.statStart;
-            if(document.getElementById('lang-stat-start-acc')) document.getElementById('lang-stat-start-acc').innerText = l.statStart;
-            document.getElementById('lang-stat-ver').innerText = l.statVer;
-            document.getElementById('lang-stat-icons').innerText = l.statIcons;
-            document.getElementById('lang-stat-by').innerText = l.statBy;
-            document.getElementById('lang-dl-zip').innerText = l.dlZip;
-            document.getElementById('lang-dl-zip2').innerText = l.dlZip;
-            document.getElementById('lang-dl-rec').innerText = l.dlRec;
-            document.getElementById('lang-cl-btn').innerText = l.clBtn;
-            document.getElementById('lang-mdf-desc').innerText = l.mdfDesc;
-            document.getElementById('lang-stat-rel').innerText = l.statRel;
-            document.getElementById('lang-stat-status').innerText = l.statStatus;
-            document.getElementById('lang-stat-ver-mdf').innerText = l.statVer;
-            document.getElementById('lang-mdf-rec').innerText = l.mdfRec;
-            document.getElementById('lang-acc-desc').innerText = l.accDesc;
-            document.getElementById('lang-tg-join').innerText = l.tgJoin;
-            document.getElementById('lang-tg-desc').innerText = l.tgDesc;
-            document.getElementById('lang-timer-title').innerText = l.timerTitle;
-            document.getElementById('lang-t-d').innerText = l.tD;
-            document.getElementById('lang-t-h').innerText = l.tH;
-            document.getElementById('lang-t-m').innerText = l.tM;
-            document.getElementById('lang-t-s').innerText = l.tS;
-            document.getElementById('lang-specs-title').innerText = l.specsTitle;
-            document.getElementById('lang-chip').innerText = l.chip;
-            document.getElementById('lang-mem1').innerText = l.mem;
-            document.getElementById('lang-mem2').innerText = l.mem;
-            document.getElementById('lang-disk').innerText = l.disk;
-            document.getElementById('lang-footer').innerText = l.footer;
-            document.getElementById('lang-modal-title').innerText = l.modalTitle;
-            document.getElementById('lang-modal-body').innerHTML = l.modalBody;
-            document.getElementById('lang-modal-close').innerText = l.modalClose;
+            const setSafe = (id, val, isHtml = false) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (isHtml) el.innerHTML = val;
+                    else el.innerText = val;
+                }
+            };
+
+            setSafe('langToggle', currentLang.toUpperCase());
+            setSafe('lang-mob-title', l.mobTitle);
+            setSafe('lang-mob-desc', l.mobDesc, true);
+            setSafe('lang-bio', l.bio, true);
+            setSafe('lang-status-worked', l.statusWorked);
+            setSafe('lang-status-cracked', l.statusCracked);
+            setSafe('lang-status-github', l.statusGithub);
+            setSafe('lang-libdock-desc', l.libDesc);
+            setSafe('lang-stat-start', l.statStart);
+            setSafe('lang-stat-start-acc', l.statStart);
+            setSafe('lang-stat-ver', l.statVer);
+            setSafe('lang-stat-icons', l.statIcons);
+            setSafe('lang-stat-by', l.statBy);
+            setSafe('lang-dl-zip', l.dlZip);
+            setSafe('lang-dl-zip2', l.dlZip);
+            setSafe('lang-dl-rec', l.dlRec);
+            setSafe('lang-cl-btn', l.clBtn);
+            setSafe('lang-mdf-desc', l.mdfDesc);
+            setSafe('lang-stat-rel', l.statRel);
+            setSafe('lang-stat-status', l.statStatus);
+            setSafe('lang-stat-ver-mdf', l.statVer);
+            setSafe('lang-mdf-rec', l.mdfRec);
+            setSafe('lang-acc-desc', l.accDesc);
+            setSafe('lang-tg-join', l.tgJoin);
+            setSafe('lang-tg-desc', l.tgDesc);
+            setSafe('lang-timer-title', l.timerTitle);
+            setSafe('lang-t-d', l.tD);
+            setSafe('lang-t-h', l.tH);
+            setSafe('lang-t-m', l.tM);
+            setSafe('lang-t-s', l.tS);
+            setSafe('lang-specs-title', l.specsTitle);
+            setSafe('lang-chip', l.chip);
+            setSafe('lang-mem1', l.mem);
+            setSafe('lang-mem2', l.mem);
+            setSafe('lang-disk', l.disk);
+            setSafe('lang-footer', l.footer);
+            setSafe('lang-modal-title', l.modalTitle);
+            setSafe('lang-modal-body', l.modalBody, true);
+            setSafe('lang-modal-close', l.modalClose);
         }
 
         function toggleLang() {
