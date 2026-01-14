@@ -73,7 +73,7 @@
             font-weight: 700;
         }
 
-        /* --- NEW MOBILE STUB STYLE --- */
+        /* --- MOBILE STUB --- */
         #mobile-stub {
             display: none;
             position: fixed;
@@ -101,19 +101,8 @@
             z-index: 2;
         }
 
-        #mobile-stub h1 { 
-            font-size: 22px; 
-            margin-bottom: 15px; 
-            color: var(--text-main); 
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        
-        #mobile-stub p { 
-            font-size: 14px; 
-            color: var(--text-sec); 
-            line-height: 1.6;
-        }
+        #mobile-stub h1 { font-size: 22px; margin-bottom: 15px; color: var(--text-main); font-weight: 800; }
+        #mobile-stub p { font-size: 14px; color: var(--text-sec); line-height: 1.6; }
 
         .stub-icon {
             font-size: 50px;
@@ -189,7 +178,6 @@
 
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* TYPING EFFECT CSS */
         h1 { font-size: 32px; font-weight: 700; letter-spacing: -1px; min-height: 38px; }
         .cursor {
             display: inline-block;
@@ -318,6 +306,27 @@
             border-radius: 35px; border: 1px solid var(--glass-border);
             padding: 35px; overflow-y: auto; scrollbar-width: none;
             position: relative;
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .warning-icon {
+            font-size: 60px;
+            display: block;
+            margin: 0 auto 20px;
+            text-align: center;
+            filter: drop-shadow(0 0 10px var(--accent-orange));
+            animation: warningPulse 2s infinite;
+        }
+
+        @keyframes warningPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .badge { font-size: 10px; padding: 3px 10px; border-radius: 8px; font-weight: 700; text-transform: uppercase; }
@@ -369,7 +378,7 @@
             <div class="blob-right"></div>
         </div>
         <div class="stub-content">
-            <span class="stub-icon">Sorry</span>
+            <span class="stub-icon">⚠️</span>
             <h1 id="lang-mob-title">Mobile version is under development</h1>
             <p id="lang-mob-desc">Please visit this site from a desktop computer <br> to get full access to LIBDock and other tools.</p>
         </div>
@@ -389,13 +398,30 @@
         <div class="modal-content">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h2 id="lang-modal-title" style="font-size:22px;">Change Log</h2>
-                <button onclick="closeModal()" style="background:none; border:none; color:var(--text-main); font-size:28px; cursor:pointer;">&times;</button>
+                <button onclick="closeModal('changelogModal')" style="background:none; border:none; color:var(--text-main); font-size:28px; cursor:pointer;">&times;</button>
             </div>
             <span style="color: var(--accent); font-weight: 700; font-size: 14px;">📅 1 January 2026</span>
             <span style="font-size: 20px; font-weight: 800; margin: 8px 0 15px; display: block;">v1.7 Release</span>
             <div id="lang-modal-body" style="font-size: 13px; line-height: 1.7; color: var(--text-sec); margin-bottom: 25px;">
                 </div>
-            <button class="download-btn" id="lang-modal-close" onclick="closeModal()" style="padding: 12px;">Close</button>
+            <button class="download-btn" id="lang-modal-close" onclick="closeModal('changelogModal')" style="padding: 12px;">Close</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="steamModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 id="lang-steam-title" style="font-size:22px;">Warning</h2>
+                <button onclick="closeModal('steamModal')" style="background:none; border:none; color:var(--text-main); font-size:28px; cursor:pointer;">&times;</button>
+            </div>
+            <div class="warning-icon">⚠️</div>
+            <p id="lang-steam-body" style="font-size: 14px; line-height: 1.7; color: var(--text-sec); margin-bottom: 25px; text-align: center; font-weight: 500;">
+                Steam emulator work now you can save your configs.
+            </p>
+            <div style="display: flex; gap: 10px;">
+                <a id="steamDownloadLink" href="https://www.mediafire.com/file/zxh89n1s8r4ehtb/MyDockFinder.zip/file" target="_blank" class="download-btn" style="text-decoration:none; padding: 12px; flex: 1;">Download</a>
+                <button class="changelog-btn" id="lang-steam-close" onclick="closeModal('steamModal')" style="flex: 1;">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -436,7 +462,7 @@
                                 <a href="https://www.mediafire.com/file/kk0wb98xn7r5o6q/LIBDock_beta_3.zip/file" class="dropdown-item">Beta <span>1.8 Beta 3</span></a>
                             </div>
                         </div>
-                        <button class="changelog-btn" id="lang-cl-btn" onclick="openModal()">Change Log</button>
+                        <button class="changelog-btn" id="lang-cl-btn" onclick="openModal('changelogModal')">Change Log</button>
                     </div>
                 </div>
             </div>
@@ -458,8 +484,8 @@
                         <div class="download-wrapper">
                             <button class="download-btn" id="lang-dl-zip2" onclick="toggleDropdown(event, 'mdfMenu')">Download ZIP</button>
                             <div class="dropdown-menu" id="mdfMenu">
-                                <a href="https://www.mediafire.com/file/zxh89n1s8r4ehtb/MyDockFinder.zip/file" class="dropdown-item">MyDockFinder 1.10.9.9 <span id="lang-mdf-rec">Lastet (Recomended)</span></a>
-                                <a href="https://download1529.mediafire.com/7lu0egj0pmbgtvHUMm6iVPybmV1bcnvSaIJHyHC2h0gV99CUX0IMg0Z5lZtfrJ17zE3CdFww1SHqXkRkkAUxmiKG3jwLPXWTRkyKOnof8aEyqVHYYsWswsO0TG6VDdq-4XizdRNnVA7yfgyfBGenuGRe1Ewmd3caVlAG_Uv0Mhw/lqfrr68f3qs5i84/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.8 <span id="lang-mdf-rec">Old Build</span></a>
+                                <a href="javascript:void(0)" onclick="openSteamModal('https://www.mediafire.com/file/t98na7k6jmzcsxq/MyDockFinder.zip/file')" class="dropdown-item">MyDockFinder 1.10.9.9 <span id="lang-mdf-rec">Latest (Recommended)</span></a>
+                                <a href="https://download1529.mediafire.com/7lu0egj0pmbgtvHUMm6iVPybmV1bcnvSaIJHyHC2h0gV99CUX0IMg0Z5lZtfrJ17zE3CdFww1SHqXkRkkAUxmiKG3jwLPXWTRkyKOnof8aEyqVHYYsWswsO0TG6VDdq-4XizdRNnVA7yfgyfBGenuGRe1Ewmd3caVlAG_Uv0Mhw/lqfrr68f3qs5i84/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.8 <span id="lang-mdf-old">Old Build</span></a>
                                 <a href="https://download1349.mediafire.com/znbfcgjzqaggR7cnc04VhYPFmR1iwv55h0P5kOesaAQXk9A1yBjBV-Z7aqyggJNhsF6eFgdwLRdoVNTfodaCJYgspBfh2lZ665PeBM_qu4g58e__A4B6AmZUEybDdbIXNPiDyjJloRwO4UoSn9Pi_0-ggL--AmjnWio-y9z0bgw/rnrd3el23glyjqx/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.7 <span>Old Build</span></a>
                                 <a href="https://download1336.mediafire.com/fqgqk5ks2ubgb2vStoAC9Svrry-qj1ePuUpJfKQpdnpvCy661rUn8nhyNqcSSSJVl3h9zvpM2ze8Femlb8q18u_juUBa8r8HLXGWrjesJr3rDu9AdGKwt4142EpGMN4FdMccznWbbOfmAWt2DDUONHj2ffgWdbyyVgXIL3H5e7w/wmoaebo6bo6280d/MyDockFinder.zip" class="dropdown-item">MyDockFinder 1.10.9.5 <span>Old Build</span></a>
                             </div>
@@ -541,12 +567,14 @@
                 statStart: "Project Start", statVer: "Version", statIcons: "Icons", statBy: "Created By", statRel: "Released", statStatus: "Status",
                 dlZip: "Download ZIP", dlRec: "1.7 Released (Recommended)", clBtn: "Change Log",
                 mdfDesc: "YaY Crack MyDockFinder.", accDesc: "Professional automated cracking tool.",
-                mdfRec: "Latest (Recommended)",
+                mdfRec: "Latest (Recommended)", mdfOld: "Old Build",
                 tgJoin: "Join Telegram Channel", tgDesc: "Get the latest updates on @LIBDock channel.",
                 timerTitle: "COUNTDOWN 2027 YEARS", tD: "DAYS", tH: "HRS", tM: "MIN", tS: "SEC",
                 specsTitle: "MY WORKSTATIONS", chip: "Chip", mem: "Memory", disk: "Disk",
                 footer: "Site By W1xced • 2026",
                 modalTitle: "Change Log", modalClose: "Close",
+                steamTitle: "Warning",
+                steamBody: "Steam emulator work now you can save your configs.",
                 modalBody: `
                     <strong>Totally added from Beta/Alpha/dev:</strong><br>
                     • Add - 200+ icons<br>
@@ -580,12 +608,14 @@
                 statStart: "Старт проекта", statVer: "Версия", statIcons: "Иконки", statBy: "Авторы", statRel: "Релиз", statStatus: "Статус",
                 dlZip: "Скачать ZIP", dlRec: "1.7 Релиз (Рекомендуется)", clBtn: "Чейнджлог",
                 mdfDesc: "Ура, взломали MyDockFinder.", accDesc: "Профессиональный инструмент для авто-кряка.",
-                mdfRec: "Последняя (Рекомендуется)",
+                mdfRec: "Последняя (Рекомендуется)", mdfOld: "Старая сборка",
                 tgJoin: "Telegram Канал", tgDesc: "Свежие обновления в канале @LIBDock.",
                 timerTitle: "ОТСЧЕТ ДО 2027 ГОДА", tD: "ДНЕЙ", tH: "ЧАС", tM: "МИН", tS: "СЕК",
                 specsTitle: "МОИ РАБОЧИЕ СТАНЦИИ", chip: "Чип", mem: "Память", disk: "Диск",
                 footer: "Сайт от W1xced • 2026",
                 modalTitle: "Список изменений", modalClose: "Закрыть",
+                steamTitle: "Предупреждение",
+                steamBody: "Steam эмулятор работает, теперь вы можете сохранять свои конфиги.",
                 modalBody: `
                     <strong>Добавлено из Beta/Alpha/dev:</strong><br>
                     • Добавлено - 200+ иконок<br>
@@ -619,12 +649,14 @@
                 statStart: "Старт проєкту", statVer: "Версия", statIcons: "Іконки", statBy: "Автори", statRel: "Реліз", statStatus: "Статус",
                 dlZip: "Завантажити ZIP", dlRec: "1.7 Реліз (Рекомендовано)", clBtn: "Чейнджлог",
                 mdfDesc: "Ура, зламали MyDockFinder.", accDesc: "Професійний інструмент для авто-кряку.",
-                mdfRec: "Остання (Рекомендовано)",
+                mdfRec: "Остання (Рекомендовано)", mdfOld: "Стара збірка",
                 tgJoin: "Telegram Канал", tgDesc: "Останні оновлення у каналі @LIBDock.",
                 timerTitle: "ВІДЛІК ДО 2027 РОКУ", tD: "ДНІВ", tH: "ГОД", tM: "ХВИЛ", tS: "СЕК",
                 specsTitle: "МОЇ РОБОЧІ СТАНЦІЇ", chip: "Чіп", mem: "Пам'ять", disk: "Диск",
                 footer: "Сайт від W1xced • 2026",
                 modalTitle: "Список змін", modalClose: "Закрити",
+                steamTitle: "Попередження",
+                steamBody: "Steam емулятор працює, тепер ви можете зберігати свої конфіги.",
                 modalBody: `
                     <strong>Додано з Beta/Alpha/dev:</strong><br>
                     • Додано - 200+ іконок<br>
@@ -685,6 +717,7 @@
             setSafe('lang-stat-status', l.statStatus);
             setSafe('lang-stat-ver-mdf', l.statVer);
             setSafe('lang-mdf-rec', l.mdfRec);
+            setSafe('lang-mdf-old', l.mdfOld);
             setSafe('lang-acc-desc', l.accDesc);
             setSafe('lang-tg-join', l.tgJoin);
             setSafe('lang-tg-desc', l.tgDesc);
@@ -702,6 +735,9 @@
             setSafe('lang-modal-title', l.modalTitle);
             setSafe('lang-modal-body', l.modalBody, true);
             setSafe('lang-modal-close', l.modalClose);
+            setSafe('lang-steam-title', l.steamTitle);
+            setSafe('lang-steam-body', l.steamBody);
+            setSafe('lang-steam-close', l.modalClose);
         }
 
         function toggleLang() {
@@ -770,8 +806,17 @@
         }
 
         window.onclick = function(event) { if (!event.target.matches('.download-btn')) hideDropdowns(); }
-        function openModal() { document.getElementById('changelogModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeModal() { document.getElementById('changelogModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
+        
+        // Modal functions
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+        // Steam Specific Modal
+        function openSteamModal(link) {
+            document.getElementById('steamDownloadLink').href = link;
+            openModal('steamModal');
+            hideDropdowns();
+        }
 
         function updateTimer() {
             const target = new Date('January 1, 2027 00:00:00').getTime();
