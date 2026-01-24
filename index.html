@@ -46,7 +46,16 @@
             overflow-x: hidden;
         }
 
-        /* --- UI CONTROLS --- */
+        .taco-gif {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: 100px;
+            height: 100px;
+            z-index: 100;
+            object-fit: contain;
+        }
+
         .controls-top {
             position: fixed;
             top: 20px;
@@ -73,7 +82,6 @@
             font-weight: 700;
         }
 
-        /* --- MOBILE STUB --- */
         #mobile-stub {
             display: none;
             position: fixed;
@@ -116,7 +124,6 @@
             #mobile-stub { display: flex; }
         }
 
-        /* --- BACKGROUND BLUR EFFECTS --- */
         .liquid-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -193,7 +200,6 @@
         .bio-text { color: var(--text-sec); font-size: 14px; margin-bottom: 30px; line-height: 1.5; }
         .highlight { color: var(--accent); font-weight: 600; }
 
-        /* --- CARDS STYLE --- */
         .projects { display: flex; flex-direction: column; gap: 12px; }
         
         .card {
@@ -234,7 +240,6 @@
         .stat-label { font-size: 10px; color: var(--text-sec); text-transform: uppercase; }
         .stat-value { font-size: 12px; font-weight: 600; color: var(--accent); }
 
-        /* --- DROPDOWN MENU --- */
         .download-wrapper { position: relative; flex: 1; }
 
         .download-btn {
@@ -293,7 +298,7 @@
             cursor: pointer;
         }
 
-        /* --- MODAL STYLE --- */
+
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
@@ -334,7 +339,6 @@
         .badge.blue { background: rgba(0, 122, 255, 0.2); color: var(--accent); }
         .badge.orange { background: rgba(255, 159, 10, 0.2); color: var(--accent-orange); }
 
-        /* --- TIMER BOX --- */
         .release-box {
             background: var(--glass);
             backdrop-filter: blur(25px) saturate(180%);
@@ -351,7 +355,6 @@
         .timer-unit span { font-size: 24px; font-family: monospace; font-weight: 700; }
         .timer-unit small { font-size: 9px; color: var(--text-sec); margin-top: 4px; }
 
-        /* --- WORKSTATIONS SPECS --- */
         .specs-card {
             background: var(--glass);
             backdrop-filter: blur(25px) saturate(180%);
@@ -371,6 +374,8 @@
     </style>
 </head>
 <body>
+
+    <img src="Taco.gif" alt="Taco" class="taco-gif">
 
     <div id="mobile-stub">
         <div class="liquid-bg">
@@ -556,7 +561,6 @@
     </div>
 
     <script>
-        // --- TRANSLATION SYSTEM ---
         const translations = {
             en: {
                 mobTitle: "Mobile version is under development",
@@ -748,7 +752,6 @@
             applyLang();
         }
 
-        // --- TYPING EFFECT ---
         const nickName = "W1xced";
         const typingElement = document.getElementById('typing-nick');
         let typeIdx = 0;
@@ -762,7 +765,6 @@
             }
         }
 
-        // --- THEME ---
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
@@ -771,7 +773,6 @@
             document.getElementById('winIcon').src = isLight ? 'LogoWindows_light.png' : 'LogoWindows_dark.png';
         }
 
-        // --- INIT ---
         window.addEventListener('load', () => {
             applyLang();
             setTimeout(type, 500);
@@ -807,11 +808,9 @@
 
         window.onclick = function(event) { if (!event.target.matches('.download-btn')) hideDropdowns(); }
         
-        // Modal functions
         function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        // Steam Specific Modal
         function openSteamModal(link) {
             document.getElementById('steamDownloadLink').href = link;
             openModal('steamModal');
