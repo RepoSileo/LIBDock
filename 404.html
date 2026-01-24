@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Not Found | W1xced</title>
+    <link rel="icon" type="image/jpg" href="LogoTitle.jpg">
     <style>
         :root {
             --bg-color: #000000;
@@ -26,7 +27,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
@@ -36,80 +37,230 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
 
+       
         .liquid-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             filter: blur(100px);
             opacity: 0.4;
+            overflow: hidden;
         }
 
         .blob {
             position: absolute;
-            width: 500px; height: 500px;
+            width: 400px; height: 400px;
             background: linear-gradient(135deg, var(--accent), #5856D6);
             border-radius: 50%;
             top: 10%; left: -5%;
-            animation: move 20s infinite alternate ease-in-out;
+            animation: move 25s infinite alternate ease-in-out;
         }
 
         .blob-right {
             position: absolute;
-            width: 600px; height: 600px;
+            width: 500px; height: 500px;
             background: linear-gradient(135deg, #0047AB, #8E56D6);
             border-radius: 50%;
             bottom: -15%; right: -10%;
-            animation: moveRight 25s infinite alternate ease-in-out;
-            opacity: 0.6;
+            animation: moveRight 30s infinite alternate ease-in-out;
+            opacity: 0.5;
         }
 
-        @keyframes move { from { transform: translate(0, 0); } to { transform: translate(100px, 50px); } }
-        @keyframes moveRight { from { transform: translate(0, 0); } to { transform: translate(-100px, -100px); } }
+        @keyframes move {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(100px, 50px) rotate(20deg); }
+        }
 
-        .error-container {
+        @keyframes moveRight {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(-80px, -100px) scale(0.95); }
+        }
+
+       
+        .container {
+            width: 100%;
+            max-width: 440px;
             text-align: center;
+            z-index: 1;
+        }
+
+        .error-card {
             background: var(--glass);
             backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid var(--glass-border);
-            padding: 50px 40px;
-            border-radius: 40px;
-            max-width: 400px;
-            width: 90%;
+            border-radius: 35px;
+            padding: 50px 30px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: slideUp 0.6s ease-out;
         }
 
-        h1 {
-            font-size: 80px;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+       
+        .error-code {
+            font-size: 100px;
             font-weight: 800;
+            letter-spacing: -2px;
             margin-bottom: 10px;
-            background: linear-gradient(to bottom, #fff, #666);
+            background: linear-gradient(135deg, var(--accent), #5856D6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
         }
 
-        body.light-mode h1 {
-            background: linear-gradient(to bottom, #333, #000);
+        .error-code::after {
+            content: "404";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--accent), #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: blur(12px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+        }
+
+        body.light-mode .error-code {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
             -webkit-background-clip: text;
         }
 
-        p { color: var(--text-sec); font-size: 18px; margin-bottom: 30px; }
-
-        .home-btn {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 15px;
-            font-weight: 600;
-            transition: transform 0.2s, opacity 0.2s;
+        body.light-mode .error-code::after {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
         }
 
-        .home-btn:hover { transform: scale(1.05); opacity: 0.9; }
+        
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-sec);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+       
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(128, 128, 128, 0.1);
+        }
+
+        
+        .controls-top {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .ui-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .ui-btn:hover {
+            background: rgba(128, 128, 128, 0.15);
+        }
+
+        
+        @media (max-width: 640px) {
+            .error-code { font-size: 80px; }
+            .title { font-size: 20px; }
+            .error-card { padding: 35px 20px; }
+            .controls-top { top: 15px; right: 15px; gap: 6px; }
+            .ui-btn { width: 40px; height: 40px; }
+        }
+
+        body {
+            transition: background-color 0.4s ease;
+        }
     </style>
 </head>
 <body>
@@ -119,28 +270,98 @@
         <div class="blob-right"></div>
     </div>
 
-    <div class="error-container">
-        <h1>404</h1>
-        <p id="error-desc">Page not found.</p>
-        <a href="https://reposileo.github.io/LIBDock/" class="home-btn" id="back-btn">Back to home</a>
+    <div class="controls-top">
+        <button class="ui-btn" id="langToggle" onclick="toggleLang()">EN</button>
+        <button class="ui-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
+    </div>
+    <div class="container">
+        <div class="error-card">
+            <div class="error-code">404</div>
+            <h1 class="title" id="error-title">Страница не найдена</h1>
+            <p class="subtitle" id="error-desc">
+                Кажется, вы ищете что-то, чего здесь нет. Возможно, страница была удалена или перемещена.
+            </p>
+            <div class="actions">
+                <a href="https://reposileo.github.io/LIBDock/" class="btn btn-primary" id="back-btn">
+                    <span>🏠</span> <span id="btn-text">Вернуться на главную</span>
+                </a>
+                <a href="javascript:void(0)" class="btn btn-secondary" onclick="location.reload()">
+                    <span>🔄</span> <span id="refresh-text">Обновить страницу</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <script>
         const errorLangs = {
-            en: { desc: "Page not found.", back: "Back to home" },
-            ru: { desc: "Страница не найдена.", back: "Вернуться на главную" },
-            ua: { desc: "Сторінку не знайдено.", back: "Повернутися на головну" }
+            en: { 
+                title: "Page Not Found",
+                desc: "Looks like you're looking for something that's not here. The page may have been moved or deleted.",
+                back: "Back to home",
+                refresh: "Refresh page"
+            },
+            ru: { 
+                title: "Страница не найдена",
+                desc: "Кажется, вы ищете что-то, чего здесь нет. Возможно, страница была удалена или перемещена.",
+                back: "Вернуться на главную",
+                refresh: "Обновить страницу"
+            },
+            ua: { 
+                title: "Сторінку не знайдено",
+                desc: "Здається, ви шукаєте те, чого тут немає. Можливо, сторінку було видалено або переміщено.",
+                back: "Повернутися на головну",
+                refresh: "Оновити сторінку"
+            }
         };
 
-        const currentLang = localStorage.getItem('lang') || 'en';
-        const l = errorLangs[currentLang];
-        
-        document.getElementById('error-desc').innerText = l.desc;
-        document.getElementById('back-btn').innerText = l.back;
+        let currentLang = localStorage.getItem('lang') || 'en';
 
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-mode');
+        function applyLanguage() {
+            const l = errorLangs[currentLang] || errorLangs.en;
+            document.getElementById('error-title').innerText = l.title;
+            document.getElementById('error-desc').innerText = l.desc;
+            document.getElementById('btn-text').innerText = l.back;
+            document.getElementById('refresh-text').innerText = l.refresh;
+            document.getElementById('langToggle').innerText = currentLang.toUpperCase();
         }
+
+        function toggleLang() {
+            const order = ['en', 'ru', 'ua'];
+            let idx = order.indexOf(currentLang);
+            currentLang = order[(idx + 1) % order.length];
+            localStorage.setItem('lang', currentLang);
+            applyLanguage();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            document.getElementById('themeToggle').innerText = isLight ? '🔆' : '🌙';
+        }
+
+
+        window.addEventListener('load', () => {
+
+            applyLanguage();
+
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').innerText = '🔆';
+            } else {
+                document.getElementById('themeToggle').innerText = '🌙';
+            }
+            const errorCode = document.querySelector('.error-code');
+            errorCode.style.cursor = 'pointer';
+            errorCode.addEventListener('click', () => {
+                errorCode.style.animation = 'none';
+                setTimeout(() => {
+                    errorCode.style.animation = 'pulse 1s infinite';
+                    setTimeout(() => {
+                        errorCode.style.animation = 'pulse 3s infinite';
+                    }, 1000);
+                }, 10);
+            });
+        });
     </script>
 </body>
-</html>
