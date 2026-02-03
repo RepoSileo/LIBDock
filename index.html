@@ -284,10 +284,13 @@
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             text-align: left;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.4s ease;
             position: relative;
             text-decoration: none;
             color: inherit;
+            will-change: transform;
         }
 
         .card-content {
@@ -303,7 +306,9 @@
             max-height: 0;
             opacity: 0;
             background: rgba(128, 128, 128, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 0 24px;
             overflow: hidden;
             border-bottom-left-radius: 24px;
