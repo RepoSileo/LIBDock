@@ -240,36 +240,38 @@
             padding: 12px 30px;
             border-radius: 12px;
             font-weight: 600;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             border: none;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
         }
 
         .home-btn:hover {
-            transform: scale(1.05);
-            opacity: 0.9;
+            transform: scale(1.05) translateY(-2px);
+            opacity: 1;
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.5);
         }
 
         .refresh-btn {
             display: inline-block;
-            background: rgba(128, 128, 128, 0.15);
+            background: rgba(128, 128, 128, 0.1);
             color: var(--text-sec);
             text-decoration: none;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 12px;
             font-weight: 600;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             border: 1px solid var(--glass-border);
             cursor: pointer;
-            margin-top: 15px;
-            font-size: 14px;
+            margin-top: 20px;
+            font-size: 13px;
         }
 
         .refresh-btn:hover {
-            transform: scale(1.05);
-            background: rgba(128, 128, 128, 0.25);
+            transform: scale(1.03);
+            background: rgba(128, 128, 128, 0.2);
             color: var(--text-main);
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
