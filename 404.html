@@ -310,30 +310,8 @@
         <button class="refresh-btn" id="refresh-btn" onclick="location.reload()">Refresh page</button>
     </div>
 
+    <script src="translations.js"></script>
     <script>
-        const translations = {
-            en: {
-                mobTitle: "Mobile version is under development",
-                mobDesc: "Please visit this site from a desktop computer <br> to get full access to LIBDock and other tools.",
-                desc: "Page not found.",
-                back: "Back to home",
-                refresh: "Refresh page"
-            },
-            ru: {
-                mobTitle: "Мобильная версия в разработке",
-                mobDesc: "Пожалуйста, посетите сайт с компьютера <br> для полного доступа к LIBDock и инструментам.",
-                desc: "Страница не найдена.",
-                back: "Вернуться на главную",
-                refresh: "Обновить страницу"
-            },
-            ua: {
-                mobTitle: "Мобільна версія у розробці",
-                mobDesc: "Будь ласка, зайдіть з комп'ютера <br> для повного доступу до LIBDock та інструментів.",
-                desc: "Сторінку не знайдено.",
-                back: "Повернутися на головну",
-                refresh: "Оновити сторінку"
-            }
-        };
 
         let currentLang = localStorage.getItem('lang') || 'en';
 
