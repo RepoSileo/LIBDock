@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Not Found | W1xced</title>
-    <link rel="icon" type="image/jpg" href="LogoTitle.jpg">
     <style>
         :root {
             --bg-color: #000000;
             --glass: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.12);
             --accent: #007AFF;
+            --accent-green: #30D158;
+            --accent-orange: #FF9F0A;
             --text-main: #ffffff;
             --text-sec: #8E8E93;
+            --modal-bg: #1c1c1e;
         }
 
         body.light-mode {
@@ -21,6 +24,7 @@
             --glass-border: rgba(0, 0, 0, 0.1);
             --text-main: #000000;
             --text-sec: #636366;
+            --modal-bg: #ffffff;
         }
 
         * {
@@ -37,188 +41,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px;
-            overflow-x: hidden;
-        }
-
-       
-        .liquid-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            filter: blur(100px);
-            opacity: 0.4;
+            height: 100vh;
             overflow: hidden;
         }
 
-        .blob {
-            position: absolute;
-            width: 400px; height: 400px;
-            background: linear-gradient(135deg, var(--accent), #5856D6);
-            border-radius: 50%;
-            top: 10%; left: -5%;
-            animation: move 25s infinite alternate ease-in-out;
-        }
-
-        .blob-right {
-            position: absolute;
-            width: 500px; height: 500px;
-            background: linear-gradient(135deg, #0047AB, #8E56D6);
-            border-radius: 50%;
-            bottom: -15%; right: -10%;
-            animation: moveRight 30s infinite alternate ease-in-out;
-            opacity: 0.5;
-        }
-
-        @keyframes move {
-            from { transform: translate(0, 0) rotate(0deg); }
-            to { transform: translate(100px, 50px) rotate(20deg); }
-        }
-
-        @keyframes moveRight {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(-80px, -100px) scale(0.95); }
-        }
-
-       
-        .container {
-            width: 100%;
-            max-width: 440px;
-            text-align: center;
-            z-index: 1;
-        }
-
-        .error-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 35px;
-            padding: 50px 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-       
-        .error-code {
-            font-size: 100px;
-            font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--accent), #5856D6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            display: inline-block;
-        }
-
-        .error-code::after {
-            content: "404";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--accent), #5856D6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: blur(12px);
-            opacity: 0.4;
-            z-index: -1;
-            animation: pulse 3s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.05); }
-        }
-
-        body.light-mode .error-code {
-            background: linear-gradient(135deg, #007AFF, #5856D6);
-            -webkit-background-clip: text;
-        }
-
-        body.light-mode .error-code::after {
-            background: linear-gradient(135deg, #007AFF, #5856D6);
-        }
-
-        
-        .title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: var(--text-sec);
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-       
-        .actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .btn {
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 15px;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--glass);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(128, 128, 128, 0.1);
-        }
-
-        
         .controls-top {
             position: fixed;
             top: 20px;
@@ -245,70 +71,251 @@
             font-weight: 700;
         }
 
-        .ui-btn:hover {
+        #mobile-stub {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 99999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .stub-content {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: 40px 25px;
+            border-radius: 35px;
+            max-width: 320px;
+            z-index: 2;
+        }
+
+        #mobile-stub h1 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        #mobile-stub p {
+            font-size: 14px;
+            color: var(--text-sec);
+            line-height: 1.6;
+        }
+
+        .stub-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 15px var(--accent));
+        }
+
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden;
+            }
+
+            #mobile-stub {
+                display: flex;
+            }
+        }
+
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(100px);
+            opacity: 0.4;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--accent), #5856D6);
+            border-radius: 50%;
+            top: 10%;
+            left: -5%;
+            animation: move 20s infinite alternate ease-in-out;
+        }
+
+        .blob-right {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #0047AB, #8E56D6);
+            border-radius: 50%;
+            bottom: -15%;
+            right: -10%;
+            animation: moveRight 25s infinite alternate ease-in-out;
+            opacity: 0.6;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            to {
+                transform: translate(120px, 80px) rotate(30deg);
+            }
+        }
+
+        @keyframes moveRight {
+            from {
+                transform: translate(0, 0) scale(1.1);
+            }
+
+            to {
+                transform: translate(-100px, -150px) scale(1);
+            }
+        }
+
+        .error-container {
+            text-align: center;
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: 50px 40px;
+            border-radius: 40px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .error-container:hover {
+            transform: scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h1.error-title {
+            font-size: 80px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-mode h1.error-title {
+            background: linear-gradient(to bottom, #333, #000);
+            -webkit-background-clip: text;
+        }
+
+        p.error-desc {
+            color: var(--text-sec);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .home-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: transform 0.2s, opacity 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .home-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .refresh-btn {
+            display: inline-block;
             background: rgba(128, 128, 128, 0.15);
+            color: var(--text-sec);
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 14px;
         }
 
-        
-        @media (max-width: 640px) {
-            .error-code { font-size: 80px; }
-            .title { font-size: 20px; }
-            .error-card { padding: 35px 20px; }
-            .controls-top { top: 15px; right: 15px; gap: 6px; }
-            .ui-btn { width: 40px; height: 40px; }
-        }
-
-        body {
-            transition: background-color 0.4s ease;
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            background: rgba(128, 128, 128, 0.25);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
+
 <body>
 
-    <div class="liquid-bg">
-        <div class="blob"></div>
-        <div class="blob-right"></div>
+    <div id="mobile-stub">
+        <div class="liquid-bg">
+            <div class="blob"></div>
+            <div class="blob-right"></div>
+        </div>
+        <div class="stub-content">
+            <span class="stub-icon">⚠️</span>
+            <h1 id="lang-mob-title">Mobile version is under development</h1>
+            <p id="lang-mob-desc">Please visit this site from a desktop computer <br> to get full access to LIBDock and
+                other tools.</p>
+        </div>
     </div>
 
     <div class="controls-top">
         <button class="ui-btn" id="langToggle" onclick="toggleLang()">EN</button>
         <button class="ui-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
     </div>
-    <div class="container">
-        <div class="error-card">
-            <div class="error-code">404</div>
-            <h1 class="title" id="error-title">Страница не найдена</h1>
-            <p class="subtitle" id="error-desc">
-                Кажется, вы ищете что-то, чего здесь нет. Возможно, страница была удалена или перемещена.
-            </p>
-            <div class="actions">
-                <a href="https://reposileo.github.io/LIBDock/" class="btn btn-primary" id="back-btn">
-                    <span>🏠</span> <span id="btn-text">Вернуться на главную</span>
-                </a>
-                <a href="javascript:void(0)" class="btn btn-secondary" onclick="location.reload()">
-                    <span>🔄</span> <span id="refresh-text">Обновить страницу</span>
-                </a>
-            </div>
-        </div>
+
+    <div class="liquid-bg">
+        <div class="blob"></div>
+        <div class="blob-right"></div>
+    </div>
+
+    <div class="error-container">
+        <h1 class="error-title">404</h1>
+        <p id="error-desc" class="error-desc">Page not found.</p>
+        <!-- Ensure this link points to your index.html or root -->
+        <a href="index.html" class="home-btn" id="back-btn">Back to home</a>
+        <br>
+        <button class="refresh-btn" id="refresh-btn" onclick="location.reload()">Refresh page</button>
     </div>
 
     <script>
-        const errorLangs = {
-            en: { 
-                title: "Page Not Found",
-                desc: "Looks like you're looking for something that's not here. The page may have been moved or deleted.",
+        const translations = {
+            en: {
+                mobTitle: "Mobile version is under development",
+                mobDesc: "Please visit this site from a desktop computer <br> to get full access to LIBDock and other tools.",
+                desc: "Page not found.",
                 back: "Back to home",
                 refresh: "Refresh page"
             },
-            ru: { 
-                title: "Страница не найдена",
-                desc: "Кажется, вы ищете что-то, чего здесь нет. Возможно, страница была удалена или перемещена.",
+            ru: {
+                mobTitle: "Мобильная версия в разработке",
+                mobDesc: "Пожалуйста, посетите сайт с компьютера <br> для полного доступа к LIBDock и инструментам.",
+                desc: "Страница не найдена.",
                 back: "Вернуться на главную",
                 refresh: "Обновить страницу"
             },
-            ua: { 
-                title: "Сторінку не знайдено",
-                desc: "Здається, ви шукаєте те, чого тут немає. Можливо, сторінку було видалено або переміщено.",
+            ua: {
+                mobTitle: "Мобільна версія у розробці",
+                mobDesc: "Будь ласка, зайдіть з комп'ютера <br> для повного доступу до LIBDock та інструментів.",
+                desc: "Сторінку не знайдено.",
                 back: "Повернутися на головну",
                 refresh: "Оновити сторінку"
             }
@@ -316,13 +323,22 @@
 
         let currentLang = localStorage.getItem('lang') || 'en';
 
-        function applyLanguage() {
-            const l = errorLangs[currentLang] || errorLangs.en;
-            document.getElementById('error-title').innerText = l.title;
-            document.getElementById('error-desc').innerText = l.desc;
-            document.getElementById('btn-text').innerText = l.back;
-            document.getElementById('refresh-text').innerText = l.refresh;
-            document.getElementById('langToggle').innerText = currentLang.toUpperCase();
+        function applyLang() {
+            const l = translations[currentLang];
+            const setSafe = (id, val, isHtml = false) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (isHtml) el.innerHTML = val;
+                    else el.innerText = val;
+                }
+            };
+
+            setSafe('langToggle', currentLang.toUpperCase());
+            setSafe('lang-mob-title', l.mobTitle);
+            setSafe('lang-mob-desc', l.mobDesc, true);
+            setSafe('error-desc', l.desc);
+            setSafe('back-btn', l.back);
+            setSafe('refresh-btn', l.refresh);
         }
 
         function toggleLang() {
@@ -330,7 +346,7 @@
             let idx = order.indexOf(currentLang);
             currentLang = order[(idx + 1) % order.length];
             localStorage.setItem('lang', currentLang);
-            applyLanguage();
+            applyLang();
         }
 
         function toggleTheme() {
@@ -340,28 +356,19 @@
             document.getElementById('themeToggle').innerText = isLight ? '🔆' : '🌙';
         }
 
-
         window.addEventListener('load', () => {
+            applyLang();
 
-            applyLanguage();
-
+            // Set initial theme based on localStorage
             if (localStorage.getItem('theme') === 'light') {
                 document.body.classList.add('light-mode');
                 document.getElementById('themeToggle').innerText = '🔆';
             } else {
+                document.body.classList.remove('light-mode');
                 document.getElementById('themeToggle').innerText = '🌙';
             }
-            const errorCode = document.querySelector('.error-code');
-            errorCode.style.cursor = 'pointer';
-            errorCode.addEventListener('click', () => {
-                errorCode.style.animation = 'none';
-                setTimeout(() => {
-                    errorCode.style.animation = 'pulse 1s infinite';
-                    setTimeout(() => {
-                        errorCode.style.animation = 'pulse 3s infinite';
-                    }, 1000);
-                }, 10);
-            });
         });
     </script>
 </body>
+
+</html>
