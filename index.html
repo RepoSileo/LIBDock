@@ -315,7 +315,8 @@
             border-bottom-right-radius: 24px;
         }
 
-        .card:hover .stats-panel {
+        .card:hover .stats-panel,
+        .card.active .stats-panel {
             max-height: 800px;
             opacity: 1;
             padding: 16px 24px 20px 24px;
@@ -957,6 +958,20 @@
         }
 
         window.onclick = function (event) { if (!event.target.matches('.download-btn')) hideDropdowns(); }
+
+        // Mobile Fix: Toggle card expansion on click
+        document.querySelectorAll('.card').forEach(card => {
+            // Avoid adding toggle to the Telegram link card which should just navigate
+            if (!card.getAttribute('href')) {
+                card.addEventListener('click', function () {
+                    // Close other cards
+                    document.querySelectorAll('.card').forEach(c => {
+                        if (c !== this) c.classList.remove('active');
+                    });
+                    this.classList.toggle('active');
+                });
+            }
+        });
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = 'auto'; }
