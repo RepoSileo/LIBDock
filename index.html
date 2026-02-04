@@ -675,7 +675,7 @@
         </p>
 
         <div class="projects">
-            <div class="card" onmouseleave="hideDropdowns()">
+            <div class="card">
                 <div class="card-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:18px; font-weight:600;">LIBDock</span>
@@ -713,7 +713,7 @@
                 </div>
             </div>
 
-            <div class="card" onmouseleave="hideDropdowns()">
+            <div class="card">
                 <div class="card-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:18px; font-weight:600;">MyDockFinder</span>
@@ -752,7 +752,7 @@
                 </div>
             </div>
 
-            <div class="card" onmouseleave="hideDropdowns()">
+            <div class="card">
                 <div class="card-content">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:18px; font-weight:600;">MyDockFinderAppCracker</span>
@@ -980,13 +980,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        function checkDevice() {
-            const stub = document.getElementById('mobile-stub');
-            if (window.innerWidth <= 768) { stub.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-            else { stub.style.display = 'none'; document.body.style.overflow = 'auto'; }
-        }
-        window.addEventListener('resize', checkDevice);
-        checkDevice();
+
     </script>
 </body>
 
