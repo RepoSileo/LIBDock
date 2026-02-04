@@ -41,8 +41,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .controls-top {
@@ -73,48 +73,9 @@
         }
 
         .ui-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.08);
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        .ui-btn:active {
-            transform: scale(0.95);
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px;
-                height: auto;
-                min-height: 100vh;
-                overflow-y: auto;
-            }
-
-            .error-container {
-                padding: 30px 20px;
-                width: 100%;
-            }
-
-            h1.error-title {
-                font-size: 60px;
-            }
-
-            p.error-desc {
-                font-size: 16px;
-            }
-
-            .blob,
-            .blob-right {
-                width: 300px;
-                height: 300px;
-                opacity: 0.5;
-            }
-
-            .controls-top {
-                top: 15px;
-                right: 15px;
-            }
         }
 
         .liquid-bg {
@@ -171,91 +132,95 @@
             }
         }
 
-        .error-container {
+        /* Main Container - Same style as index.html */
+        .container {
+            width: 100%;
+            max-width: 440px;
             text-align: center;
+            z-index: 1;
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .error-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .error-desc {
+            font-size: 14px;
+            color: var(--text-sec);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Card style like index.html */
+        .error-card {
             background: var(--glass);
             backdrop-filter: blur(25px) saturate(180%);
             border: 1px solid var(--glass-border);
-            padding: 50px 40px;
-            border-radius: 40px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .error-container:hover {
-            transform: scale(1.02);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        h1.error-title {
-            font-size: 80px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(to bottom, #fff, #666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        body.light-mode h1.error-title {
-            background: linear-gradient(to bottom, #333, #000);
-            -webkit-background-clip: text;
-        }
-
-        p.error-desc {
-            color: var(--text-sec);
-            font-size: 18px;
-            margin-bottom: 30px;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 20px;
         }
 
         .home-btn {
             display: inline-block;
+            padding: 14px 32px;
             background: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            color: #fff;
             border: none;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .home-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            opacity: 1;
-            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
         }
 
-        .refresh-btn {
-            display: inline-block;
-            background: rgba(128, 128, 128, 0.1);
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
             color: var(--text-sec);
-            text-decoration: none;
-            padding: 10px 25px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
-            margin-top: 20px;
-            font-size: 13px;
+            opacity: 0.5;
         }
 
-        .refresh-btn:hover {
-            transform: scale(1.03);
-            background: rgba(128, 128, 128, 0.2);
-            color: var(--text-main);
-            border-color: rgba(255, 255, 255, 0.3);
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-title {
+                font-size: 20px;
+            }
+
+            .blob,
+            .blob-right {
+                width: 300px;
+                height: 300px;
+                opacity: 0.5;
+            }
         }
     </style>
 </head>
 
 <body>
-
-
 
     <div class="controls-top">
         <button class="ui-btn" id="langToggle" onclick="toggleLang()">EN</button>
@@ -267,36 +232,46 @@
         <div class="blob-right"></div>
     </div>
 
-    <div class="error-container">
-        <h1 class="error-title">404</h1>
-        <p id="error-desc" class="error-desc">Page not found.</p>
-        <!-- Ensure this link points to your index.html or root -->
-        <a href="index.html" class="home-btn" id="back-btn">Back to home</a>
-        <br>
-        <button class="refresh-btn" id="refresh-btn" onclick="location.reload()">Refresh page</button>
+    <div class="container">
+        <div class="error-card">
+            <div class="error-code">404</div>
+            <h1 class="error-title" id="error-title">Page Not Found</h1>
+            <p class="error-desc" id="error-desc">
+                The page you're looking for doesn't exist or has been moved.
+            </p>
+            <a href="index.html" class="home-btn" id="home-btn">Back to Home</a>
+        </div>
+        <div class="footer">W1xced • 2026</div>
     </div>
 
     <script src="translations.js"></script>
     <script>
-
         let currentLang = localStorage.getItem('lang') || 'en';
 
-        function applyLang() {
-            const l = translations[currentLang];
-            const setSafe = (id, val, isHtml = false) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    if (isHtml) el.innerHTML = val;
-                    else el.innerText = val;
-                }
-            };
+        const errorTexts = {
+            en: {
+                title: 'Page Not Found',
+                desc: "The page you're looking for doesn't exist or has been moved.",
+                btn: 'Back to Home'
+            },
+            ru: {
+                title: 'Страница не найдена',
+                desc: 'Страница, которую вы ищете, не существует или была перемещена.',
+                btn: 'На главную'
+            },
+            ua: {
+                title: 'Сторінку не знайдено',
+                desc: 'Сторінка, яку ви шукаєте, не існує або була переміщена.',
+                btn: 'На головну'
+            }
+        };
 
-            setSafe('langToggle', currentLang.toUpperCase());
-            setSafe('lang-mob-title', l.mobTitle);
-            setSafe('lang-mob-desc', l.mobDesc, true);
-            setSafe('error-desc', l.desc);
-            setSafe('back-btn', l.back);
-            setSafe('refresh-btn', l.refresh);
+        function applyLang() {
+            const l = errorTexts[currentLang];
+            document.getElementById('langToggle').innerText = currentLang.toUpperCase();
+            document.getElementById('error-title').innerText = l.title;
+            document.getElementById('error-desc').innerText = l.desc;
+            document.getElementById('home-btn').innerText = l.btn;
         }
 
         function toggleLang() {
@@ -316,14 +291,9 @@
 
         window.addEventListener('load', () => {
             applyLang();
-
-            // Set initial theme based on localStorage
             if (localStorage.getItem('theme') === 'light') {
                 document.body.classList.add('light-mode');
                 document.getElementById('themeToggle').innerText = '🔆';
-            } else {
-                document.body.classList.remove('light-mode');
-                document.getElementById('themeToggle').innerText = '🌙';
             }
         });
     </script>

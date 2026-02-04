@@ -205,25 +205,22 @@
         }
 
         .avatar-box {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 25px;
-            background: var(--modal-bg);
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 15px;
+            background: transparent;
             border-radius: 35px;
-            border: 1px solid var(--glass-border);
+            border: none;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             position: relative;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s ease;
         }
 
         .avatar-box:hover {
-            transform: scale(1.1) rotate(3deg);
-            box-shadow: 0 20px 50px rgba(0, 122, 255, 0.3);
-            border-color: var(--accent);
+            transform: scale(1.08);
         }
 
         .avatar-box img {
@@ -603,6 +600,86 @@
             letter-spacing: 2px;
             text-align: center;
         }
+
+        .social-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(25px);
+            padding: 10px 16px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .social-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        /* Avatar Effects */
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-img {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        /* Standard Cat Avatar Effect: Simple Scale Only */
+        .avatar-img.standard:hover {
+            transform: scale(1.08);
+        }
+
+        .avatar-img.standard:active {
+            transform: scale(0.98);
+        }
+
+        /* Rare OpenCore Avatar Effect: Tech Glow & Pulse */
+        .avatar-img.rare {
+            border: 2px solid rgba(0, 122, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
+            animation: rare-pulse 2s infinite alternate;
+        }
+
+        .avatar-img.rare:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 122, 255, 0.6), inset 0 0 20px rgba(0, 122, 255, 0.4);
+            filter: brightness(1.2);
+        }
+
+        @keyframes rare-pulse {
+            from {
+                box-shadow: 0 0 15px rgba(0, 122, 255, 0.2);
+            }
+
+            to {
+                box-shadow: 0 0 30px rgba(0, 122, 255, 0.5);
+            }
+        }
     </style>
 </head>
 
@@ -661,12 +738,13 @@
     </div>
 
     <div class="container">
-        <div class="avatar-box">
-            <img src="Logo.jpg" alt="Logo" onerror="this.style.display='none';">
-            <div style="position:absolute; z-index:-1; font-size:40px; font-weight:bold; color: #333;">W</div>
+        <div class="avatar-box" style="overflow: visible;">
+            <!-- Avatar with ID for manipulation -->
+            <img src="Avatar.jpg" alt="User Avatar" class="avatar-img standard" id="userAvatar"
+                style="width:100%; height:100%; border-radius:35px;">
         </div>
 
-        <h1 id="typing-nick"></h1>
+        <h1 class="title" id="typing-nick"></h1>
         <p class="nickname">Open-Core-W1xced</p>
 
         <p class="bio-text" id="lang-bio">
@@ -674,6 +752,21 @@
                 Engineering</span>.<br>
             Focusing on high-end software solutions and customization.
         </p>
+
+        <div class="social-row">
+            <a href="https://github.com/RepoSileo" target="_blank" class="social-btn">
+                <img src="github.png" alt="GitHub">
+                RepoSileo
+            </a>
+            <a href="https://t.me/W1xced" target="_blank" class="social-btn">
+                <img src="telegram.png" alt="Telegram">
+                W1xced
+            </a>
+            <a href="https://t.me/LIBDock" target="_blank" class="social-btn">
+                <img src="telegram.png" alt="Telegram">
+                LIBDock
+            </a>
+        </div>
 
         <div class="projects">
             <div class="card">
@@ -702,7 +795,7 @@
                                 <a href="https://www.mediafire.com/file/04rjn1zm8x14ecp/LIBDock.zip/file"
                                     class="dropdown-item">Release <span id="lang-dl-rec">1.8 Released
                                         (Recommended)</span></a>
-                                <a href="https://download1078.mediafire.com/gb547wgeq9cgDOfyvUJOytToQOTxGNvTBOSfcuXVgPr3_SNMcEmNiGyyCyaZJePHo4AeUnmMI3dk1MQpew-x8PPAe8mAJqgJiY-IG-W2FxpL-I0PwYiRAbCjj2mnJ1qmPu4YnbmeD1Pz2CD7Pp4nLWkVOv3dihyLNdUMqAnhHPg/9dse9bgej78cjqt/LIBDock.zip"
+                                <a href="https://download1078.mediafire.com/gb547wgeq9cgDOfyvUJOytToQOTxGNvTBOSfcuXVgPr3_SNMcEmNiGyyCyaZJePHo4AeUnmMI3dk1MQpew-x8PPAe8mAJqgJiY-IG-W2FxpL-I0PwYiRAbCjj2mnJ1qmPu4YnbmeD1Pz2CD7Pp4nLWkVOv3dihyLNdUMqAnhHPn/9dse9bgej78cjqt/LIBDock.zip"
                                     class="dropdown-item">Alpha <span>1.7 Alpha 3</span></a>
                                 <a href="https://www.mediafire.com/file/kk0wb98xn7r5o6q/LIBDock_beta_3.zip/file"
                                     class="dropdown-item">Beta <span>1.8 Beta 3</span></a>
@@ -740,12 +833,12 @@
                                     onclick="openSteamModal('https://www.mediafire.com/file/t98na7k6jmzcsxq/MyDockFinder.zip/file')"
                                     class="dropdown-item">MyDockFinder 1.10.9.9 <span id="lang-mdf-rec">Latest
                                         (Recommended)</span></a>
-                                <a href="https://download1529.mediafire.com/7lu0egj0pmbgtvHUMm6iVPybmV1bcnvSaIJHyHC2h0gV99CUX0IMg0Z5lZtfrJ17zE3CdFww1SHqXkRkkAUxmiKG3jwLPXWTRkyKOnof8aEyqVHYYsWswsO0TG6VDdq-4XizdRNnVA7yfgyfBGenuGRe1Ewmd3caVlAG_Uv0Mhw/lqfrr68f3qs5i84/MyDockFinder.zip"
+                                <a href="https://download1529.mediafire.com/7lu0egj0pmbgtvHUMm6iVPybmV1bcnvSaIJHyHC2h0gV99CUX0IMg0Z5lZtfrJ17zE3CdFww1SHqXkRkkAUxmiKG3jwLPXWTRkyKOnof8aEyqVHYYsWswsO0TG6VDdq-4XizdRNVAY7yfgyfBGenuGRe1Ewmd3caVlAG_Uv0Mhw/lqfrr68f3qs5i84/MyDockFinder.zip"
                                     class="dropdown-item">MyDockFinder 1.10.9.8 <span id="lang-mdf-old">Old
                                         Build</span></a>
                                 <a href="https://download1349.mediafire.com/znbfcgjzqaggR7cnc04VhYPFmR1iwv55h0P5kOesaAQXk9A1yBjBV-Z7aqyggJNhsF6eFgdwLRdoVNTfodaCJYgspBfh2lZ665PeBM_qu4g58e__A4B6AmZUEybDdbIXNPiDyjJloRwO4UoSn9Pi_0-ggL--AmjnWio-y9z0bgw/rnrd3el23glyjqx/MyDockFinder.zip"
                                     class="dropdown-item">MyDockFinder 1.10.9.7 <span>Old Build</span></a>
-                                <a href="https://download1336.mediafire.com/fqgqk5ks2ubgb2vStoAC9Svrry-qj1ePuUpJfKQpdnpvCy661rUn8nhyNqcSSSJVl3h9zvpM2ze8Femlb8q18u_juUBa8r8HLXGWrjesJr3rDu9AdGKwt4142EpGMN4FdMccznWbbOfmAWt2DDUONHj2ffgWdbyyVgXIL3H5e7w/wmoaebo6bo6280d/MyDockFinder.zip"
+                                <a href="https://download1336.mediafire.com/fqgqk5ks2ubgb2vStoAC9Svrry-qj1ePuUpJfKQpdnpbCy661rUn8nhyNqcSSSJVl3h9zvpM2ze3Femlb8q18u_juUBa8r8HLXGWrjesJr3rDu9AdGKwt4142EpGMN4FdMccznWbbOfmAWt2DDUONHj2ffgWdbyyVgXIL3H5e7w/wmoaebo6bo6280d/MyDockFinder.zip"
                                     class="dropdown-item">MyDockFinder 1.10.9.5 <span>Old Build</span></a>
                             </div>
                         </div>
@@ -813,7 +906,7 @@
             <div class="specs-grid">
                 <div class="device-info">
                     <img src="LogoMacBook.png" alt="MacBook" class="device-icon"
-                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg';">
+                        onerror="this.src='https://upload.wikimedia.org/wikipedia/wikipedia/commons/f/fa/Apple_logo_black.svg';">
                     <p class="device-name">MacBook Pro</p>
                     <p class="spec-line"><span id="lang-chip">Chip</span> <b>M2</b></p>
                     <p class="spec-line"><span id="lang-mem1">Memory</span> <b>32GB</b></p>
@@ -995,6 +1088,45 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
+
+        // Rare Avatar Logic
+        const avatarEl = document.getElementById('userAvatar');
+        const rareSrc = 'AvatarRare.jpg'; // Assuming jpg based on file list
+        const standardSrc = 'Avatar.jpg';
+        let clickCount = 0;
+        let isRare = false;
+
+        // 1. Random Chance on Load (5%)
+        if (Math.random() < 0.05) {
+            setRareAvatar();
+        }
+
+        // 2. Click Trigger
+        avatarEl.addEventListener('click', () => {
+            if (isRare) return; // Already rare
+
+            clickCount++;
+
+            // Visual feedback for clicking (small shake handled by CSS :active)
+
+            if (clickCount >= 10) {
+                setRareAvatar();
+            }
+        });
+
+        function setRareAvatar() {
+            isRare = true;
+            avatarEl.style.opacity = '0';
+
+            setTimeout(() => {
+                avatarEl.src = rareSrc;
+                avatarEl.classList.remove('standard');
+                avatarEl.classList.add('rare');
+                avatarEl.style.opacity = '1';
+                // Reset click count
+                clickCount = 0;
+            }, 300);
+        }
 
     </script>
 </body>
